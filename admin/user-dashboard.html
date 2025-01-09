@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <title>Bootstrap CRUD Data Table for Database with Modal Form</title>
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round"
+    />
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/icon?family=Material+Icons"
+    />
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
+    <link rel="stylesheet" href="style/style.css" />
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+    <script type="module">
+      // Importa la función verifyToken del módulo auth.js
+      import { verifyToken } from "./js/auth.js";
+
+      // Verificar el token al cargar la página
+      verifyToken().then(() => {
+        console.log("Token verificado, acceso permitido.");
+      });
+    </script>
+  </head>
+  <body>
+    <main role="main" class="pb-5 mt-5">
+      <div class="container my-5">
+        <!-- Perfil -->
+        <div class="row">
+          <div class="col-md-4 text-center">
+            <img
+              id="profile-photo"
+              src="#"
+              alt="Foto de Perfil"
+              class="profile-photo img-fluid img-thumbnail w-100"
+            />
+          </div>
+          <div class="col-md-8">
+            <h1 id="nombre" class="mb-0">Nombre Completo</h1>
+            <h3 id="titulo" class="text-secondary">Títulos</h3>
+            <p id="edad" class="text-muted">Edad: XX años</p>
+            <p id="descripcion">Breve descripción de competencias.</p>
+            <a href="/admin/postmanager.html" class="btn btn-success"
+              ><i class="material-icons">&#xE147;</i>
+              <span>Agregar Noticia</span></a
+            >
+          </div>
+        </div>
+
+        <!-- Investigaciones y Proyectos -->
+        <div class="my-5 row">
+          <div class="table-responsive">
+            <div class="table-wrapper">
+              <div class="table-title">
+                <div class="row">
+                  <div class="col-sm-6">
+                    <h2><b>Investigaciones</b></h2>
+                  </div>
+                  <div class="col-sm-6">
+                    <a
+                      href="#addModal"
+                      class="btn btn-success"
+                      data-toggle="modal"
+                      onclick="loadDiffusionToAdd()"
+                      ><i class="material-icons">&#xE147;</i>
+                      <span>Agregar</span></a
+                    >
+                    <a
+                      href="#deleteModal"
+                      class="btn btn-danger"
+                      data-toggle="modal"
+                      ><i class="material-icons">&#xE15C;</i>
+                      <span>Borrar</span></a
+                    >
+                  </div>
+                </div>
+              </div>
+              <table class="table table-striped table-hover" id="inv-table">
+                <thead id="table-head">
+                  <tr>
+                    <th>
+                      <span class="custom-checkbox">
+                        <input type="checkbox" id="selectAll" on />
+                        <label for="selectAll"></label>
+                      </span>
+                    </th>
+                  </tr>
+                </thead>
+                <tbody id="table-body"></tbody>
+              </table>
+            </div>
+          </div>
+          <div class="table-responsive">
+            <div class="table-wrapper">
+              <div class="table-title">
+                <div class="row">
+                  <div class="col-sm-6">
+                    <h2><b>Proyectos</b></h2>
+                  </div>
+                  <div class="col-sm-6">
+                    <a
+                      href="#addModal"
+                      class="btn btn-success"
+                      data-toggle="modal"
+                      onclick="loadProjectToAdd()"
+                      ><i class="material-icons">&#xE147;</i>
+                      <span>Agregar</span></a
+                    >
+                    <a
+                      href="#deleteModal"
+                      class="btn btn-danger"
+                      data-toggle="modal"
+                      ><i class="material-icons">&#xE15C;</i>
+                      <span>Borrar</span></a
+                    >
+                  </div>
+                </div>
+              </div>
+              <table class="table table-striped table-hover" id="project-table">
+                <thead id="table-head">
+                  <tr>
+                    <th>
+                      <span class="custom-checkbox">
+                        <input type="checkbox" id="selectAll" on />
+                        <label for="selectAll"></label>
+                      </span>
+                    </th>
+                  </tr>
+                </thead>
+                <tbody id="table-body"></tbody>
+              </table>
+            </div>
+          </div>
+          <div class="table-responsive">
+            <div class="table-wrapper">
+              <div class="table-title">
+                <div class="row">
+                  <div class="col-sm-6">
+                    <h2><b>Actividades de Extensión</b></h2>
+                  </div>
+                  <div class="col-sm-6">
+                    <a
+                      href="#addModal"
+                      class="btn btn-success"
+                      data-toggle="modal"
+                      onclick="loadExtensionToAdd()"
+                      ><i class="material-icons">&#xE147;</i>
+                      <span>Agregar</span></a
+                    >
+                    <a
+                      href="#deleteModal"
+                      class="btn btn-danger"
+                      data-toggle="modal"
+                      ><i class="material-icons">&#xE15C;</i>
+                      <span>Borrar</span></a
+                    >
+                  </div>
+                </div>
+              </div>
+              <table class="table table-striped table-hover" id="ext-table">
+                <thead id="table-head">
+                  <tr>
+                    <th>
+                      <span class="custom-checkbox">
+                        <input type="checkbox" id="selectAll" on />
+                        <label for="selectAll"></label>
+                      </span>
+                    </th>
+                  </tr>
+                </thead>
+                <tbody id="table-body"></tbody>
+              </table>
+            </div>
+          </div>
+          <div class="table-responsive">
+            <div class="table-wrapper">
+              <div class="table-title">
+                <div class="row">
+                  <div class="col-sm-6">
+                    <h2><b>Servicios prestados</b></h2>
+                  </div>
+                  <div class="col-sm-6">
+                    <a
+                      href="#addModal"
+                      class="btn btn-success"
+                      data-toggle="modal"
+                      ><i class="material-icons">&#xE147;</i>
+                      <span>Agregar</span></a
+                    >
+                    <a
+                      href="#deleteModal"
+                      class="btn btn-danger"
+                      data-toggle="modal"
+                      ><i class="material-icons">&#xE15C;</i>
+                      <span>Borrar</span></a
+                    >
+                  </div>
+                </div>
+              </div>
+              <table class="table table-striped table-hover" id="service-table">
+                <thead id="table-head">
+                  <tr>
+                    <th>
+                      <span class="custom-checkbox">
+                        <input type="checkbox" id="selectAll" on />
+                        <label for="selectAll"></label>
+                      </span>
+                    </th>
+                  </tr>
+                </thead>
+                <tbody id="table-body"></tbody>
+              </table>
+              FUNCIONALIDAD EN DESARROLLO
+            </div>
+          </div>
+          <div class="table-responsive">
+            <div class="table-wrapper">
+              <div class="table-title">
+                <div class="row">
+                  <div class="col-sm-6">
+                    <h2><b>Unidades curriculares dictadas</b></h2>
+                  </div>
+                  <div class="col-sm-6">
+                    <a
+                      href="#addModal"
+                      class="btn btn-success"
+                      data-toggle="modal"
+                      ><i class="material-icons">&#xE147;</i>
+                      <span>Agregar</span></a
+                    >
+                    <a
+                      href="#deleteModal"
+                      class="btn btn-danger"
+                      data-toggle="modal"
+                      ><i class="material-icons">&#xE15C;</i>
+                      <span>Borrar</span></a
+                    >
+                  </div>
+                </div>
+              </div>
+              <table class="table table-striped table-hover" id="unit-table">
+                <thead id="table-head">
+                  <tr>
+                    <th>
+                      <span class="custom-checkbox">
+                        <input type="checkbox" id="selectAll" on />
+                        <label for="selectAll"></label>
+                      </span>
+                    </th>
+                  </tr>
+                </thead>
+                <tbody id="table-body"></tbody>
+              </table>
+              FUNCIONALIDAD EN DESARROLLO
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Add Modal HTML -->
+      <div id="addModal" class="modal fade">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <form id="addForm">
+              <div class="modal-header">
+                <h4 class="modal-title">Añadir registros</h4>
+                <button
+                  type="button"
+                  class="close"
+                  data-dismiss="modal"
+                  aria-hidden="true"
+                >
+                  &times;
+                </button>
+              </div>
+              <div class="modal-body"></div>
+              <div class="modal-footer">
+                <input
+                  type="button"
+                  class="btn btn-default"
+                  data-dismiss="modal"
+                  value="Cancelar"
+                />
+                <input type="submit" class="btn btn-success" value="Añadir" />
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+      <!-- Edit Modal HTML -->
+      <div id="editModal" class="modal fade">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <form id="editForm">
+              <div class="modal-header">
+                <h4 class="modal-title">Editar registros</h4>
+                <button
+                  type="button"
+                  class="close"
+                  data-dismiss="modal"
+                  aria-hidden="true"
+                >
+                  &times;
+                </button>
+              </div>
+              <div class="modal-body"></div>
+              <div class="modal-footer">
+                <input
+                  type="button"
+                  class="btn btn-default"
+                  data-dismiss="modal"
+                  value="Cancelar"
+                />
+                <input type="submit" class="btn btn-info" value="Guardar" />
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+      <!-- Delete Modal HTML -->
+      <div id="deleteModal" class="modal fade">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <form id="deleteForm">
+              <div class="modal-header">
+                <h4 class="modal-title">Borrar registros</h4>
+                <button
+                  type="button"
+                  class="close"
+                  data-dismiss="modal"
+                  aria-hidden="true"
+                >
+                  &times;
+                </button>
+              </div>
+              <div class="modal-body">
+                <p>Está seguro de borrar los registros seleccionados?</p>
+                <p class="text-warning">
+                  <small>Esta acción no se puede revertir</small>
+                </p>
+                <input type="hidden" name="SelectedTable" id="SelectedTable" />
+                <input type="hidden" name="IDsToDelete" id="IDsToDelete" />
+              </div>
+
+              <div class="modal-footer">
+                <input
+                  type="button"
+                  class="btn btn-default"
+                  data-dismiss="modal"
+                  value="Cancel"
+                />
+                <input type="submit" class="btn btn-danger" value="Delete" />
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </main>
+    <script src="js/user.js"></script>
+    <script type="module">
+      import { v4 as uuidv4 } from "https://cdn.jsdelivr.net/npm/uuid@9.0.0/dist/esm-browser/index.js";
+      window.generateUUID = uuidv4;
+    </script>
+  </body>
+</html>
