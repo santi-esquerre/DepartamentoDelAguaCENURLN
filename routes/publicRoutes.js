@@ -6,6 +6,7 @@ const contactController = require("../controllers/contactController");
 
 router.get("/difusiones", otherControllers.getDifusiones);
 router.get("/proyectos", otherControllers.getProyectos);
+router.get("/materias", otherControllers.getMaterias);
 
 router.post("/suscribirse", otherControllers.createNewSubscriber);
 router.post("/contact", contactController.sendContactMessage);

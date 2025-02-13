@@ -1,0 +1,135 @@
+/* General Reset */
+body {
+  margin: 0;
+  font-family: 'Open Sans', sans-serif;
+  background-color: #f9fbfc;
+  color: #333;
+}
+
+.container {
+  width: 95%;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+header {
+  text-align: center;
+  padding: 20px 0;
+  background-color: #007bff;
+  color: white;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+header h1 {
+  font-size: 2rem;
+  margin: 0;
+}
+
+header h2 {
+  font-weight: 300;
+  margin: 10px 0 0;
+}
+
+#legend {
+  margin: 20px 0;
+  text-align: center;
+}
+
+#legend ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+#legend li {
+  display: inline-block;
+  margin: 0 10px;
+  padding: 5px 15px;
+  border-radius: 20px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: white;
+}
+
+.no-habilitada {
+  background-color: #6c757d;
+}
+
+.habilitada {
+  background-color: #ff9f43;
+}
+
+.cursada {
+  background-color: #007bff;
+}
+
+.exonerada {
+  background-color: #28a745;
+}
+
+#curriculum-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.semester {
+  background-color: white;
+  border: 1px solid #e5e5e5;
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.semester h4 {
+  text-align: center;
+  margin-bottom: 20px;
+  font-size: 1.5rem;
+  color: #007bff;
+}
+
+.card {
+  display: inline-block;
+  width: calc(33.33% - 10px);
+  margin: 5px;
+  padding: 15px;
+  background-color: #f8f9fa;
+  border: 1px solid #e5e5e5;
+  border-radius: 10px;
+  text-align: center;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: all 0.2s ease-in-out;
+  font-size: 0.9rem;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.card.no-habilitada {
+  background-color: #6c757d;
+  color: white;
+}
+
+.card.habilitada {
+  background-color: #ff9f43;
+  color: white;
+}
+
+.card.cursada {
+  background-color: #007bff;
+  color: white;
+}
+
+.card.exonerada {
+  background-color: #28a745;
+  color: white;
+}
+
+@media (max-width: 768px) {
+  .card {
+    width: 100%;
+  }
+}

@@ -125,6 +125,32 @@ const OtherModels = {
       callback
     );
   },
+  getMaterias: (callback) => {
+    db.query(
+      `
+      SELECT 
+          u.id, 
+          u.nombre, 
+          u.creditos, 
+          u.semestre,
+          CASE 
+              WHEN COUNT(r.tipo_requisito) = 0 THEN 'habilitada'
+              ELSE 'no-habilitada'
+          END AS estado,
+          GROUP_CONCAT(CASE WHEN r.tipo_requisito = 'curso' THEN r.requisito_id END) AS previasCurso,
+          GROUP_CONCAT(CASE WHEN r.tipo_requisito = 'examen' THEN r.requisito_id END) AS previasExamen
+      FROM 
+          unidadcurricular u
+      LEFT JOIN 
+          requisito_materia r 
+      ON 
+          u.id = r.materia_id
+      GROUP BY 
+          u.id, u.nombre, u.creditos, u.semestre;
+    `, callback
+    );
+  }
+
 };
 
 module.exports = OtherModels;
