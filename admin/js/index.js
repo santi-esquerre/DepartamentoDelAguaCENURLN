@@ -139,7 +139,7 @@ function deleteSelectedUsers() {
           console.log(
             `El usuario con ID ${userID} ha sido eliminado correctamente.`
           );
-          location.reload();
+          // location.reload();
         })
         .catch((error) => {
           console.error("Error deleting user:", error);

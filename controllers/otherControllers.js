@@ -108,7 +108,7 @@ exports.updateExtension = (req, res) => {
 
 exports.getRegisterByID = (req, res) => {
   Models.getRegisterByID(req.params.table, req.params.id, (err, results) => {
-    if (err) res.status(500).send(err);
+    if (err) return res.status(500).send(err);
     res.json(results);
   });
 };
@@ -150,14 +150,18 @@ exports.getMaterias = (req, res) => {
   Models.getMaterias((err, results) => {
     if (err) res.status(500).send(err);
     const materias = results.map((row) => ({
-        id: row.id,
-        nombre: row.nombre,
-        creditos: row.creditos,
-        estado: row.estado,
-        semestre: row.semestre,
-        previasCurso: row.previasCurso ? row.previasCurso.split(',').map(Number) : [],
-        previasExamen: row.previasExamen ? row.previasExamen.split(',').map(Number) : [],
-      }));
+      id: row.id,
+      nombre: row.nombre,
+      creditos: row.creditos,
+      estado: row.estado,
+      semestre: row.semestre,
+      previasCurso: row.previasCurso
+        ? row.previasCurso.split(",").map(Number)
+        : [],
+      previasExamen: row.previasExamen
+        ? row.previasExamen.split(",").map(Number)
+        : [],
+    }));
     res.json(materias);
   });
 };
