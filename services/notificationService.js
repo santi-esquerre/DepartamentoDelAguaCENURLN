@@ -7,7 +7,7 @@ const sendNewPostNotification = async (subscribers, authorId, post) => {
     // Obtener la información completa del autor a partir de su ID
     const author = await User.BACKgetById(authorId);
     if (!author) throw new Error("Autor no encontrado");
-    author.Foto = author.Foto.toString();
+    author.Foto = author.Foto ? author.Foto.toString() : null;
     console.log("Autor:", author);
 
     const apiInstance = new brevo.TransactionalEmailsApi();
@@ -130,9 +130,9 @@ const sendNewPostNotification = async (subscribers, authorId, post) => {
                     </div>
                 </div>
 
-                <a href="https://agua.unorte.edu.uy/noticia" onclick="localStorage.setItem('postID', ${
+                <a id="news_btn" href = 'https://agua.unorte.edu.uy/noticia.html?id=${
                   post.id
-                })" class="button">Leer más</a>
+                }' class="button">Leer más</a>
             </div>
 
             <div class="footer">
@@ -156,14 +156,15 @@ const sendNewPostNotification = async (subscribers, authorId, post) => {
     }));
     sendSmtpEmail.subject = `Nueva publicación: ${post.titulo}`;
     sendSmtpEmail.htmlContent = output;
-    sendSmtpEmail.attachment = [
-      {
-        name: "author.png", // Nombre del archivo en el adjunto
-        content: author.Foto, // Convertir el string Base64 a Buffer
-        cid: "authorImage", // Content-ID referenciado en el `src` del `<img>`
-      },
-    ];
-
+    if (author.Foto) {
+      sendSmtpEmail.attachment = [
+        {
+          name: "author.png", // Nombre del archivo en el adjunto
+          content: author.Foto, // Convertir el string Base64 a Buffer
+          cid: "authorImage", // Content-ID referenciado en el `src` del `<img>`
+        },
+      ];
+    }
     const response = await apiInstance.sendTransacEmail(sendSmtpEmail);
     console.log("Notificaciones enviadas con éxito:", response);
   } catch (error) {

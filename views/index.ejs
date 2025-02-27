@@ -24,109 +24,45 @@
         data-bs-pause="false"
       >
         <div class="carousel-indicators">
+          <% carrusel.forEach((slide, index) => { %>
           <button
             type="button"
             data-bs-target="#carouselExampleCaptions"
-            data-bs-slide-to="0"
-            class="active"
-            aria-current="true"
-            aria-label="Slide 1"
+            data-bs-slide-to="<%- index %>"
+            class="<%- index === 0 ? 'active' : '' %>"
+            aria-current="<%- index === 0 ? 'true' : '' %>"
+            aria-label="Slide <%- index + 1 %>"
           ></button>
-          <button
-            type="button"
-            data-bs-target="#carouselExampleCaptions"
-            data-bs-slide-to="1"
-            aria-label="Slide 2"
-          ></button>
-          <button
-            type="button"
-            data-bs-target="#carouselExampleCaptions"
-            data-bs-slide-to="2"
-            aria-label="Slide 3"
-          ></button>
+          <% }); %>
         </div>
+
         <div class="carousel-inner">
+          <% carrusel.forEach((slide, index) => { %>
           <div
-            class="carousel-item object-fit-cover active"
+            class="carousel-item object-fit-cover <%- index === 0 ? 'active' : '' %>"
             data-bs-interval="20000"
             style="height: 100vh"
           >
             <img
-              src="img/Slide1.jpg"
+              src="<%- slide.imagen %>"
               class="h-100 d-block w-100 object-fit-cover"
-              alt="..."
+              alt="Slide <%- index + 1 %>"
             />
             <div class="carousel-caption mb-5" style="z-index: 2">
-              <h1 class="text-center">Recursos hídricos</h1>
-              <h4>
-                Una carrera única que te forma para diseñar soluciones
-                innovadoras en riego, hidrología y gestión ambiental.
-                Conviértete en un profesional capaz de enfrentar los desafíos
-                del agua del siglo XXI.
-              </h4>
+              <h1 class="text-center"><%- slide.titulo %></h1>
+              <h4><%- slide.descripcion %></h4>
               <a
                 class="btn btn-primary mt-5"
                 style="font-size: x-large"
-                href="./licenciaturarhyr.html"
-                >¡Construye tu camino profesional con impacto real!</a
+                href="<%- slide.boton_enlace %>"
               >
+                <%- slide.boton_texto %>
+              </a>
             </div>
           </div>
-          <div
-            class="carousel-item object-fit-cover"
-            data-bs-interval="20000"
-            style="height: 100vh"
-          >
-            <img
-              src="img/Slide2.jpg"
-              class="h-100 d-block w-100 object-fit-cover"
-              alt="..."
-            />
-            <div class="carousel-caption mb-5" style="z-index: 2">
-              <h1 class="text-center">Investigación de vanguardia</h1>
-              <h4>
-                Exploramos desde los acuíferos subterráneos hasta los
-                ecosistemas urbanos. Nuestros proyectos integran geofísica,
-                modelación molecular y tecnologías computacionales para
-                comprender y proteger nuestros recursos hídricos.
-              </h4>
-              <a
-                class="btn btn-primary mt-5"
-                style="font-size: x-large"
-                href="./investigacion.html"
-                >Descubre la ciencia que transforma territorios</a
-              >
-            </div>
-          </div>
-          <div
-            class="carousel-item object-fit-cover"
-            data-bs-interval="20000"
-            style="height: 100vh"
-          >
-            <img
-              src="img/Slide3.jpg"
-              class="h-100 d-block w-100 object-fit-cover"
-              alt="..."
-            />
-            <div
-              class="carousel-caption mb-5 align-items-center align-content-center"
-              style="z-index: 2"
-            >
-              <h1 class="text-center">Innovación continua</h1>
-              <h4>
-                Nuestro equipo no para de crecer y evolucionar. Cada semana,
-                cada mes, generamos nuevos insights y descubrimientos que
-                impulsan nuestra comprensión de los recursos hídricos.
-              </h4>
-              <a
-                class="btn btn-primary mt-5"
-                style="font-size: x-large"
-                href="./noticias.html"
-                >Entérate de las últimas novedades</a
-              >
-            </div>
-          </div>
+          <% }); %>
         </div>
+
         <button
           class="carousel-control-prev"
           type="button"
@@ -147,6 +83,7 @@
         </button>
       </div>
     </header>
+
     <main>
       <section class="articles-section">
         <div class="container">

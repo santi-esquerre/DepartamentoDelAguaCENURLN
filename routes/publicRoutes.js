@@ -3,6 +3,17 @@ const router = express.Router();
 const userController = require("../controllers/userController");
 const otherControllers = require("../controllers/otherControllers");
 const contactController = require("../controllers/contactController");
+const {
+  renderLicenciatura,
+  renderIndex,
+  renderAboutPage
+} = require("../controllers/renderController");
+
+// Ruta para la Licenciatura en Recursos Hídricos y Riego
+router.get("/", renderIndex);
+router.get("/index.html", renderIndex);
+router.get("/licenciaturarhyr", renderLicenciatura);
+router.get("/nosotros", renderAboutPage);
 
 router.get("/difusiones", otherControllers.getDifusiones);
 router.get("/proyectos", otherControllers.getProyectos);

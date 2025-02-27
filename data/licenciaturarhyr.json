@@ -1,0 +1,66 @@
+{
+  "titulo_pagina": "Departamento del Agua - CenUR Litoral Norte",
+  "seccion_principal": {
+    "titulo": "Bienvenido a la Licenciatura en Recursos Hídricos y Riego",
+    "subtitulo": "¡Impulsa tu futuro con la Licenciatura en Recursos Hídricos y Riego!",
+    "descripcion": "**Diseña sistemas de riego innovadores**, gestiona recursos hídricos y resuelve desafíos ambientales. Conviértete en un experto clave para un mundo sostenible.",
+    "imagen_fondo": ""
+  },
+  "info_general": {
+    "titulo": "Información General",
+    "descripcion": "### Duración y Vinculación  \nLa carrera tiene una duración de **cuatro años** y está vinculada a los sectores:  \n- Agropecuario  \n- Administración y gestión del agua  \n- Planificación y ordenamiento territorial  \n- Obras hidráulicas  \n\nEl título es expedido por la **Facultad de Ingeniería de la UdelaR** y la carrera es coordinada por el **Departamento del Agua del CENUR Litoral Norte, Uruguay**.  \n\n---\n\n### Objetivo de la Carrera  \nLa **Licenciatura en Recursos Hídricos y Riego** *(anteriormente Ciencias Hídricas Aplicadas)* está orientada a la formación de profesionales con competencias técnicas en:  \n- Diseño de sistemas de riego  \n- Estudios de disponibilidad de recursos hídricos  \n- Reconocimiento del subsuelo  \n- Anteproyecto de obras hidráulicas menores  \n- Estudios hidrológicos de drenaje urbano  \n- Diseño de tratamiento de efluentes del medio rural  \n\nEl perfil profesional permite realizar estudios de **factibilidad de obras** y diseñar programas para la **gestión de los recursos hídricos superficiales y subterráneos**, complementando aspectos técnicos con la **ingeniería civil y agronómica**.  \n\n---\n\n### Hidrología Superficial  \nEl egresado podrá desempeñarse en:  \n- Planificación de usos de los recursos hídricos  \n- Mediciones en corrientes de agua (ríos, arroyos, canales)  \n- Estudios estadísticos y aplicación de modelos matemáticos para la predicción de caudales  \n- Diseño e implementación de sistemas de riego  \n- Planificación y diseño de sistemas de drenaje urbano  \n\n---\n\n### Hidrología Subterránea  \nEl campo de acción en esta área incluye:  \n- Prospección de fuentes de agua mediante metodologías geofísicas  \n- Estudios geohidrológicos para abastecimiento, uso industrial y riego  \n- Dirección de obras de perforación, extracción de agua y selección de equipamiento de bombeo  \n\n---\n\n### Formación Complementaria  \nAdemás, el egresado contará con conocimientos en:  \n- Geotecnia aplicada a obras hidráulicas menores  \n- Caracterización del sistema suelo-agua-planta-atmósfera y su relación con las tecnologías de riego y drenaje agrícola  \n- Uso de herramientas computacionales y simulación matemática en hidrología  \n- Técnicas avanzadas de riego y gestión de sistemas  \n\n---\n\n### Capacidades del Egresado  \nAl finalizar la carrera, el egresado estará capacitado para:  \n- Participar en equipos de investigación y en la elaboración e implementación de políticas de gestión de los recursos hídricos  \n- Trabajar en equipos interdisciplinarios en la resolución de problemáticas relacionadas con la gestión del agua  \n- Realizar estudios y asesoramientos sobre contaminación de cursos de agua y su impacto ambiental  \n- Continuar estudios de posgrado y actualización profesional."
+  },
+  "estructura": {
+    "titulo": "Estructura del Programa",
+    "datos": [
+      {
+        "etiqueta": "Tipo",
+        "valor": "Título de grado"
+      },
+      {
+        "etiqueta": "Duración",
+        "valor": "4 años"
+      },
+      {
+        "etiqueta": "Créditos",
+        "valor": "360"
+      },
+      {
+        "etiqueta": "Ingreso a la carrera",
+        "valor": "Acceso directo o a través del **CIO-CT** (Ciclo Inicial Optativo Científico Tecnológico)."
+      },
+      {
+        "etiqueta": "Horarios cursos primer semestre 2025",
+        "valor": "[Click aquí](/rsc/Horarios_primer_semestre_LRHyR_2025.pdf)"
+      }
+    ],
+    "video": "https://www.youtube.com/embed/tMMfuP_eD0w?si=JMYD8bSavJZTJ1uT"
+  },
+  "secciones": [
+    {
+      "id": "plan-estudios",
+      "titulo": "Plan de Estudios",
+      "contenido": "El plan se estructura en **cuatro años**, mediante **cursos semestrales**. Se establece un sistema de **créditos y áreas temáticas**. El plan de estudios se organiza en grandes áreas temáticas que corresponden a un sector de conocimiento de la ciencia, sus aplicaciones o actividades integradoras (*talleres, trabajos especiales, pasantías*). El número de créditos mínimo asignado a cada área temática determina el tiempo mínimo de dedicación total que a dicho conjunto temático se da en la Licenciatura. El número y tipo de áreas temáticas, así como su tiempo mínimo de dedicación a través de una cantidad dada de créditos, definen la estructura del plan de estudios.  \n\nLa unidad de medida del avance y fin de la carrera es el **crédito**, unidad que tiene en cuenta las horas de trabajo que requiere una asignatura para su adecuada asimilación durante el desarrollo del curso específico, incluyendo en estas horas las que corresponden a clases y trabajo asistido y las de trabajo estrictamente personal. **Un crédito equivale a 15 horas de trabajo** bajo esta consideración.  \n\nEl número total de créditos de la Licenciatura se fija en **360**, lo que corresponde a una asignación promedio de **10 créditos por asignatura**, y **60 créditos** más entre la pasantía y el proyecto.  \n\nLa secuencia de créditos que el estudiante va generando a medida que avanza en la carrera se establece mediante un **sistema de previaturas**.  ",
+      "enlaces": [
+        {
+          "url": "./rsc/Trayectoria2024_LRHYR.pdf",
+          "texto": "Trayectoria sugerida"
+        }
+      ]
+    },
+    {
+      "id": "competencias",
+      "titulo": "Competencias del Egresado",
+      "contenido": "El egresado está capacitado para:  \n\n- **Realizar estudios, formular proyectos y participar en la dirección de obras** en diferentes áreas de los recursos hídricos, como:  \n  - **Explotación de aguas subterráneas**  \n  - **Reconocimiento del subsuelo** mediante geofísica  \n  - **Distribución y abastecimiento de agua potable**  \n  - **Conducción y tratamiento de efluentes cloacales**  \n  - **Estudios de calidad de agua y medioambiente**  \n  - **Proyectos para corrección y regulación fluvial**  \n  - **Diseño de sistemas de drenaje y riego**  \n  - **Control de erosión hídrica**  \n  - **Construcción de presas de tierra y diques**  "
+    },
+    {
+      "id": "perfil-profesional",
+      "titulo": "Perfil Profesional",
+      "contenido": "Es un profesional con **sólida formación técnica**, especializado en el **manejo de los recursos hídricos**.  \n\nEl Licenciado es requerido en:  \n- **Empresas privadas agrícolas o agroindustriales**, desempeñándose como profesional responsable en tareas de **asesoramiento y supervisión en el área de riego**.  \n- **Organismos estatales** de control de la **contaminación ambiental** y monitoreo de los **recursos hídricos**.  \n- **Organismos de gestión hídrica**, donde puede ejercer funciones de **asesoramiento técnico, manejo de personal, planificación y ejecución del recurso hídrico**.  \n"
+    }
+  ],
+  "malla": {
+    "descripcion": "Esta aplicación permite verificar las previas de la carrera y calcular créditos según el avance en la aprobación de unidades curriculares. No está vinculada directamente con el **SGAE**.",
+    "enlace": "./malla/index.html"
+  }
+}

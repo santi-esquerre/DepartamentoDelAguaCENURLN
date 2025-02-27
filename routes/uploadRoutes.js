@@ -1,9 +1,21 @@
 // routes/uploadRoutes.js
 const express = require("express");
 const router = express.Router();
-const { upload, uploadFile } = require("../controllers/uploadController");
+const verifyToken = require("../middlewares/authMiddleware");
+const {
+  upload,
+  uploadFile,
+  listUploadedFiles,
+  deleteUploadedFile,
+} = require("../controllers/uploadController");
 
-// Ruta para manejar la carga de archivos
-router.post("/upload", upload.single("upload"), uploadFile);
+// 📤 Subir un archivo (protegido con JWT)
+router.post("/upload", verifyToken, upload.single("file"), uploadFile);
+
+// 📂 Listar archivos subidos
+router.get("/list-uploads", verifyToken, listUploadedFiles);
+
+// 🗑 Eliminar un archivo
+router.delete("/delete-upload/:filename", verifyToken, deleteUploadedFile);
 
 module.exports = router;

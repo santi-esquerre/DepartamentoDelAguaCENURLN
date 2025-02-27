@@ -1,275 +1,92 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
   <head>
     <meta charset="utf-8" />
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1, shrink-to-fit=no"
-    />
-    <title>Bootstrap CRUD Data Table for Database with Modal Form</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Panel de Administrador - Departamento del Agua</title>
     <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
       rel="stylesheet"
-      href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round"
-    />
-    <link
-      rel="stylesheet"
-      href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css"
-    />
-    <link
-      rel="stylesheet"
-      href="https://fonts.googleapis.com/icon?family=Material+Icons"
-    />
-    <link
-      rel="stylesheet"
-      href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
-    />
+      crossorigin="anonymous" />
     <link rel="stylesheet" href="style/style.css" />
-    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
     <script type="module">
-      // Importa la función verifyToken del módulo auth.js
       import { verifyToken } from "./js/auth.js";
-
-      // Verificar el token al cargar la página
       verifyToken().then(() => {
         console.log("Token verificado, acceso permitido.");
       });
     </script>
+    <style>
+      /* Ajustar el navbar y el espacio del main */
+      .navbar {
+        height: 56px; /* La altura típica de un navbar Bootstrap */
+      }
+
+      /* Permitir que el main use todo el espacio restante */
+      .main-container {
+        flex-grow: 1; /* Ocupa todo el espacio restante */
+        padding-top: 56px; /* Empuja el contenido hacia abajo para evitar que se solape con el navbar */
+        display: flex;
+        flex-direction: column;
+      }
+
+      /* Hacer que el iframe llene todo el espacio disponible */
+      #content-frame {
+        flex-grow: 1;
+        width: 100%;
+        height: 100%;
+        border: none;
+      }
+    </style>
   </head>
   <body>
-    <div class="container-xl">
-      <div class="table-responsive">
-        <div class="table-wrapper">
-          <div class="table-title">
-            <div class="row">
-              <div class="col-sm-6">
-                <h2>Gestion <b>Personal</b></h2>
-              </div>
-              <div class="col-sm-6">
-                <a
-                  href="#addEmployeeModal"
-                  class="btn btn-success"
-                  data-toggle="modal"
-                  ><i class="material-icons">&#xE147;</i>
-                  <span>Agregar persona</span></a
-                >
-                <a
-                  href="#deleteEmployeeModal"
-                  class="btn btn-danger"
-                  data-toggle="modal"
-                  ><i class="material-icons">&#xE15C;</i> <span>Borrar</span></a
-                >
-              </div>
-            </div>
-          </div>
-          <table class="table table-striped table-hover" id="main-table">
-            <thead id="table-head">
-              <tr>
-                <th>
-                  <span class="custom-checkbox">
-                    <input type="checkbox" id="selectAll" on />
-                    <label for="selectAll"></label>
-                  </span>
-                </th>
-              </tr>
-            </thead>
-            <tbody id="table-body"></tbody>
-          </table>
-          <!-- <div class="clearfix">
-            <div class="hint-text">
-              Showing <b>5</b> out of <b>25</b> entries
-            </div>
-            <ul class="pagination">
-              <li class="page-item disabled"><a href="#">Previous</a></li>
-              <li class="page-item active">
-                <a href="#" class="page-link">1</a>
-              </li>
-              <li class="page-item"><a href="#" class="page-link">2</a></li>
-              <li class="page-item"><a href="#" class="page-link">3</a></li>
-              <li class="page-item"><a href="#" class="page-link">4</a></li>
-              <li class="page-item"><a href="#" class="page-link">5</a></li>
-              <li class="page-item"><a href="#" class="page-link">Next</a></li>
-            </ul>
-          </div> -->
-        </div>
-      </div>
-    </div>
-    <!-- Add Modal HTML -->
-    <div id="addEmployeeModal" class="modal fade">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <form id="addEmployeeForm" action="/api/users">
-            <div class="modal-header">
-              <h4 class="modal-title">Añadir Personal</h4>
-              <button
-                type="button"
-                class="close"
-                data-dismiss="modal"
-                aria-hidden="true"
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="#">Departamento del Agua</a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarNav"
+          aria-controls="navbarNav"
+          aria-expanded="false"
+          aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav ms-auto">
+            <li class="nav-item">
+              <a class="nav-link" href="#" data-page="personal-manager.html"
+                >Personal</a
               >
-                &times;
-              </button>
-            </div>
-            <div class="modal-body">
-              <div class="form-group">
-                <label>Nombre</label>
-                <input
-                  id="AddNameInput"
-                  type="text"
-                  class="form-control"
-                  required
-                />
-              </div>
-              <div class="form-group">
-                <label>Fecha de Nacimiento</label>
-                <input
-                  id="AddBirthDateInput"
-                  type="date"
-                  class="form-control"
-                />
-              </div>
-              <div class="form-group">
-                <label>Título/Cargo</label>
-                <input id="AddTitleInput" type="text" class="form-control" />
-              </div>
-              <div class="form-group">
-                <label>Link a C.V.</label>
-                <input id="AddCVInput" type="url" class="form-control" />
-              </div>
-              <div class="form-group">
-                <label>Descripción</label>
-                <textarea
-                  id="AddDescriptionInput"
-                  class="form-control"
-                ></textarea>
-              </div>
-              <div class="form-group">
-                <label>Foto</label>
-                <input id="AddPhotoInput" type="file" class="form-control" />
-              </div>
-            </div>
-            <div class="modal-footer">
-              <input
-                type="button"
-                class="btn btn-default"
-                data-dismiss="modal"
-                value="Cancelar"
-              />
-              <input type="submit" class="btn btn-success" value="Añadir" />
-            </div>
-          </form>
-        </div>
-      </div>
-    </div>
-    <!-- Edit Modal HTML -->
-    <div id="editEmployeeModal" class="modal fade">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <form id="editEmployeeForm">
-            <div class="modal-header">
-              <h4 class="modal-title">Editar Persona</h4>
-              <button
-                type="button"
-                class="close"
-                data-dismiss="modal"
-                aria-hidden="true"
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#" data-page="postmanager.html"
+                >Creación de Posts</a
               >
-                &times;
-              </button>
-            </div>
-            <div class="modal-body">
-              <div class="form-group">
-                <label>Nombre</label>
-                <input
-                  id="EditNameInput"
-                  type="text"
-                  class="form-control"
-                  required
-                />
-              </div>
-              <div class="form-group">
-                <label>Fecha de Nacimiento</label>
-                <input
-                  id="EditBirthDateInput"
-                  type="date"
-                  class="form-control"
-                />
-              </div>
-              <div class="form-group">
-                <label>Título/Cargo</label>
-                <input id="EditTitleInput" type="text" class="form-control" />
-              </div>
-              <div class="form-group">
-                <label>Link a C.V.</label>
-                <input id="EditCVInput" type="url" class="form-control" />
-              </div>
-              <div class="form-group">
-                <label>Descripción</label>
-                <textarea
-                  id="EditDescriptionInput"
-                  class="form-control"
-                ></textarea>
-              </div>
-              <div class="form-group">
-                <label>Foto</label>
-                <input id="EditPhotoInput" type="file" class="form-control" />
-              </div>
-              <input type="hidden" name="id" id="EditUserIDInput" />
-            </div>
-            <div class="modal-footer">
-              <input
-                type="button"
-                class="btn btn-default"
-                data-dismiss="modal"
-                value="Cancelar"
-              />
-              <input type="submit" class="btn btn-info" value="Guardar" />
-            </div>
-          </form>
-        </div>
-      </div>
-    </div>
-    <!-- Delete Modal HTML -->
-    <div id="deleteEmployeeModal" class="modal fade">
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <form id="deleteEmployeeForm">
-            <div class="modal-header">
-              <h4 class="modal-title">Borrar persona(s)</h4>
-              <button
-                type="button"
-                class="close"
-                data-dismiss="modal"
-                aria-hidden="true"
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#" data-page="content-manager.html"
+                >Manejo de Contenidos</a
               >
-                &times;
-              </button>
-            </div>
-            <div class="modal-body">
-              <p>Está seguro de borrar los registros seleccionados?</p>
-              <p class="text-warning">
-                <small>Esta acción no se puede revertir</small>
-              </p>
-            </div>
-            <div class="modal-footer">
-              <input
-                type="button"
-                class="btn btn-default"
-                data-dismiss="modal"
-                value="Cancel"
-              />
-              <input
-                type="submit"
-                class="btn btn-danger"
-                value="Delete"
-                onclick="deleteSelectedUsers()"
-              />
-            </div>
-          </form>
+            </li>
+          </ul>
         </div>
       </div>
-    </div>
+    </nav>
+
+    <!-- Contenedor principal que ocupa todo el espacio restante -->
+    <main class="main-container vh-100">
+      <iframe
+        id="content-frame"
+        src="personal-manager.html"
+        frameborder="0"></iframe>
+    </main>
+
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+      crossorigin="anonymous"></script>
     <script src="js/index.js"></script>
   </body>
 </html>

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Panel de Administración</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/jsoneditor@9.5.6/dist/jsoneditor.min.css"
+      rel="stylesheet"
+      type="text/css" />
+    <script type="module">
+      import { verifyToken } from "./js/auth.js";
+      verifyToken().then(() =>
+        console.log("Token verificado, acceso permitido.")
+      );
+    </script>
+  </head>
+  <body class="container py-4">
+    <h1 class="text-center mb-4">Panel de Administración</h1>
+    <div class="row">
+      <!-- Sección de Edición de JSON -->
+      <div class="col-md-6">
+        <div class="card p-3">
+          <h2 class="h4">Editar Contenido JSON</h2>
+          <select id="jsonSelector" class="form-select mb-3"></select>
+          <div
+            id="jsoneditor"
+            class="border rounded"
+            style="height: 400px"></div>
+          <button id="save-json" class="btn btn-primary mt-3">
+            Guardar Cambios
+          </button>
+          <a href="rsc/guía_edición.pdf">¿Como modifico el texto?</a>
+        </div>
+      </div>
+
+      <!-- Sección de Archivos Subidos -->
+      <div class="col-md-6">
+        <div class="card p-3">
+          <h2 class="h4">Gestión de Archivos</h2>
+          <input type="file" id="fileInput" class="form-control mb-2" />
+          <button class="btn btn-success" onclick="uploadFile()">Subir</button>
+          <div class="mt-3">
+            <h3 class="h5">Archivos Subidos</h3>
+            <ul id="fileList" class="list-group"></ul>
+            <div
+              id="pagination"
+              class="mt-3 d-flex justify-content-center gap-2"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/jsoneditor@9.5.6/dist/jsoneditor.min.js"></script>
+    <script src="./js/content-manager.js"></script>
+  </body>
+</html>

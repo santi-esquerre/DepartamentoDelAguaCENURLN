@@ -5,14 +5,19 @@ const app = express();
 const bodyParser = require("body-parser");
 const https = require("https");
 const fs = require("fs");
+const { marked } = require("marked");
 
 const loginRoutes = require("./routes/loginRoutes");
+const jsonRoutes = require("./routes/jsonRoutes");
 const userRoutes = require("./routes/userRoutes");
 const postRoutes = require("./routes/postRoutes");
 const otherRoutes = require("./routes/otherRoutes");
 const publicRoutes = require("./routes/publicRoutes");
 const uploadRoutes = require("./routes/uploadRoutes");
 const verifyToken = require("./middlewares/authMiddleware");
+
+app.set("view engine", "ejs");
+app.set("views", path.join(__dirname, "views"));
 
 app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -31,10 +36,11 @@ app.use("/api", (req, res, next) => {
 
 app.use("/api", loginRoutes); // La ruta de /login no necesita token
 // Rutas protegidas
+app.use("/api", uploadRoutes);
+app.use("/api", jsonRoutes);
 app.use("/api", userRoutes);
 app.use("/api", postRoutes);
 app.use("/api", otherRoutes);
-app.use("/api", uploadRoutes);
 
 // Rutas públicas
 app.use("/", publicRoutes); // Rutas públicas sin protección
