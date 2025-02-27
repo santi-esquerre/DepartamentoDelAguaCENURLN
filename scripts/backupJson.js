@@ -24,7 +24,7 @@ const getTimestamp = () => {
   ).padStart(2, "0")}`;
 };
 
-// Función para hacer backup de los JSON
+// 📌 Función para hacer backup de los JSON
 const backupJsonFiles = () => {
   fs.readdir(dataDir, (err, files) => {
     if (err) {
@@ -52,5 +52,39 @@ const backupJsonFiles = () => {
   });
 };
 
-// Ejecutar la función
+// 📌 Función para eliminar backups de más de 15 días
+const deleteOldBackups = () => {
+  const now = Date.now();
+  const daysLimit = 15 * 24 * 60 * 60 * 1000; // 15 días en milisegundos
+
+  fs.readdir(backupDir, (err, files) => {
+    if (err) {
+      console.error("Error al leer la carpeta de backups:", err);
+      return;
+    }
+
+    files.forEach((file) => {
+      const filePath = path.join(backupDir, file);
+      fs.stat(filePath, (err, stats) => {
+        if (err) {
+          console.error(`Error al obtener info de ${file}:`, err);
+          return;
+        }
+
+        if (now - stats.birthtimeMs > daysLimit) {
+          fs.unlink(filePath, (err) => {
+            if (err) {
+              console.error(`Error al eliminar backup viejo ${file}:`, err);
+            } else {
+              console.log(`Backup eliminado: ${file}`);
+            }
+          });
+        }
+      });
+    });
+  });
+};
+
+// Ejecutar funciones
 backupJsonFiles();
+deleteOldBackups();
