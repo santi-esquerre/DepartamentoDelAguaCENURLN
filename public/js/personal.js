@@ -15,22 +15,26 @@ function mostrarDatos() {
       data.forEach((persona) => {
         contenido += `
         <div class="list-group-item list-group-item-action cursor-active persona" id="${persona.ID}">
-              <div class="row">
-                <div class="col-3 align-items-center">
-                  <img src="data:image/png;base64,${persona.Foto}" class="img-thumbnail w-75" />
-                </div>
-                <div class="col">
-                  <div class="d-flex w-100 justify-content-between">
-                    <div class="mb-1">
-                      <h4>${persona.Nombre}</h4>
-                      <p>${persona.Descripción}</p>
-                    </div>
-                    <small class="text-muted">${persona.Título}</small>
-                  </div>
-                </div>
-              </div>
-            </div>
-      `;
+  <div class="row align-items-center">
+    <!-- Imagen -->
+    <div class="col-auto">
+      <div class="square-container">
+        <img src="data:image/png;base64,${persona.Foto}" alt="${persona.Nombre}" class="img-fluid img-thumbnail" />
+      </div>
+    </div>
+    <!-- Información -->
+    <div class="col">
+      <div class="d-flex w-100 justify-content-between">
+        <div class="mb-1">
+          <h4>${persona.Nombre}</h4>
+          <p>${persona.Descripción}</p>
+        </div>
+        <small class="text-muted">${persona.Título}</small>
+      </div>
+    </div>
+  </div>
+</div>
+        `;
       });
 
       contenedor.innerHTML = contenido;

@@ -39,10 +39,18 @@ function cargarPersona() {
     })
     .then((data) => {
       if (data.length == 0) return;
+      else {
+        document.getElementById("main").innerHTML += `
+        <div class="my-5">
+          <h2 class="section-title">Investigaciones y Proyectos</h2>
+          <ul class="list-group" id="difusiones">
+            
+          </ul>
+        </div>
+        `;
+      }
       const difusiones = data;
       const ulDifusiones = document.getElementById("difusiones");
-      if (ulDifusiones.querySelector(".text-danger"))
-        ulDifusiones.querySelector(".text-danger").remove();
       difusiones.forEach((difusion) => {
         ulDifusiones.innerHTML += `<li class="list-group-item list-group-item-action cursor-active" style="cursor: pointer;" onclick="window.location.href = '${
           difusion.Link || ""
