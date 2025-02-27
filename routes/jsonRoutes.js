@@ -6,6 +6,8 @@ const {
   listJsonFiles,
   getJsonFile,
   saveJsonFile,
+  listBackups,
+  restoreBackup
 } = require("../controllers/jsonController");
 
 // 📂 Listar JSONs disponibles
@@ -16,5 +18,11 @@ router.get("/get-json/:filename", verifyToken, getJsonFile);
 
 // 💾 Guardar cambios en un JSON
 router.post("/save-json/:filename", verifyToken, saveJsonFile);
+
+// Listar backups disponibles
+router.get("/list-backups", verifyToken, listBackups);
+
+// Restaurar un backup
+router.post("/restore-backup/:filename", verifyToken, restoreBackup);
 
 module.exports = router;

@@ -48,8 +48,48 @@ const saveJsonFile = (req, res) => {
   });
 };
 
+const backupDir = path.join(__dirname, "../data_backups");
+
+// 📂 Listar backups disponibles
+const listBackups = (req, res) => {
+  fs.readdir(backupDir, (err, files) => {
+    if (err) {
+      console.error("Error al listar backups:", err);
+      return res
+        .status(500)
+        .json({ error: "Error al obtener la lista de backups" });
+    }
+
+    // Filtrar solo archivos JSON
+    const jsonBackups = files.filter((file) => file.endsWith(".json"));
+    res.json(jsonBackups);
+  });
+};
+
+// 🔄 Restaurar un backup
+const restoreBackup = (req, res) => {
+  const { filename } = req.params;
+  const backupPath = path.join(backupDir, filename);
+  const originalFile = filename.split("_")[0] + ".json"; // Extraer el nombre original
+  const restorePath = path.join(dataDir, originalFile);
+
+  if (!fs.existsSync(backupPath)) {
+    return res.status(404).json({ error: "Backup no encontrado" });
+  }
+
+  fs.copyFile(backupPath, restorePath, (err) => {
+    if (err) {
+      console.error("Error al restaurar backup:", err);
+      return res.status(500).json({ error: "Error al restaurar el backup" });
+    }
+    res.json({ message: `Backup ${filename} restaurado correctamente` });
+  });
+};
+
 module.exports = {
   listJsonFiles,
   getJsonFile,
   saveJsonFile,
+  listBackups,
+  restoreBackup
 };

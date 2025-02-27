@@ -157,4 +157,47 @@ function copyFilePath(filePath) {
     });
 }
 
+// Cargar backups disponibles
+async function loadBackups() {
+  const response = await fetch("/api/list-backups", {
+    headers: { Authorization: token }
+  });
+  const backups = await response.json();
+  const backupList = document.getElementById("backupList");
+  backupList.innerHTML = "";
+
+  backups.forEach((backup) => {
+    const li = document.createElement("li");
+    li.className =
+      "list-group-item d-flex justify-content-between align-items-center";
+    li.innerHTML = `
+      <span>${backup}</span>
+      <button class="btn btn-danger btn-sm" onclick="restoreBackup('${backup}')">Restaurar</button>
+    `;
+    backupList.appendChild(li);
+  });
+}
+
+// Restaurar un backup seleccionado
+async function restoreBackup(backupFilename) {
+  if (!confirm(`¿Seguro que deseas restaurar el backup ${backupFilename}?`))
+    return;
+
+  const response = await fetch(`/api/restore-backup/${backupFilename}`, {
+    method: "POST",
+    headers: { Authorization: token }
+  });
+
+  const result = await response.json();
+  alert(result.message);
+  if (response.ok) {
+    location.reload(); // Recargar para reflejar los cambios
+  }
+}
+
+// Cargar backups cuando se abre el modal
+document
+  .getElementById("backupModal")
+  .addEventListener("show.bs.modal", loadBackups);
+
 loadFiles();
