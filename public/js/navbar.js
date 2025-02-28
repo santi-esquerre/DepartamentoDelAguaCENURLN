@@ -3,8 +3,10 @@ document.addEventListener("DOMContentLoaded", function () {
   fetch("rsc/navbar.html")
     .then((response) => response.text())
     .then((data) => {
-      // Insert the HTML content into the element with id 'nav'
-      document.getElementById("nav").innerHTML = data;
+      const tempDiv = document.createElement("div");
+      tempDiv.innerHTML = data;
+      const nav = tempDiv.querySelector("#nav");
+      document.getElementById("nav").replaceWith(nav);
 
       loadActiveNavItem();
 

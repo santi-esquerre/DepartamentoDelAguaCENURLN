@@ -94,9 +94,11 @@ async function loadAuthors() {
 // Guardar el post (creación o edición)
 async function savePost() {
   const title = document.getElementById("postTitle").value;
-  const content = editorInstance.getData();
+  let content = editorInstance.getData();
   const personaId = document.getElementById("postAuthor").value;
   const id = document.getElementById("postId").value;
+
+  content = await replaceOembedWithIframe(content);
 
   const url = id ? `/api/novedades/${id}` : "/api/novedades";
   const method = id ? "PUT" : "POST";
@@ -182,6 +184,39 @@ async function deletePost(id) {
     });
     loadPosts();
   }
+}
+
+async function replaceOembedWithIframe(content) {
+  const parser = new DOMParser();
+  const doc = parser.parseFromString(content, "text/html");
+
+  const oembedElements = doc.querySelectorAll("oembed");
+
+  for (let oembed of oembedElements) {
+    const url = oembed.getAttribute("url");
+
+    if (url.includes("youtube.com") || url.includes("youtu.be")) {
+      try {
+        // 🛠️ 2️⃣ Llamar a la API de YouTube oEmbed para obtener el <iframe>
+        const response = await fetch(
+          `https://www.youtube.com/oembed?url=${encodeURIComponent(
+            url
+          )}&format=json`
+        );
+
+        if (response.ok) {
+          const data = await response.json();
+          const iframe = document.createElement("div");
+          iframe.innerHTML = data.html;
+          oembed.replaceWith(iframe.firstChild); // Reemplazar el <oembed> con el <iframe>
+        }
+      } catch (error) {
+        console.error("Error obteniendo oEmbed:", error);
+      }
+    }
+  }
+
+  return doc.body.innerHTML; // Retornar el contenido modificado
 }
 
 // Cargar los posts al iniciar

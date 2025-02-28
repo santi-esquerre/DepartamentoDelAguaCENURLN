@@ -11,13 +11,13 @@
         {
             "imagen": "img/Slide2.jpg",
             "titulo": "Investigación de *vanguardia*",
-            "descripcion": "Estudiamos cuerpos de agua subterráneos y superficiales y las afectaciones producidas por actividades humanas. Nuestras líneas de investigación integran geofísica, hidrometría, hidrogeoquímica y modelación matemática para comprender y proteger nuestros recursos hídricos.",
+            "descripcion": "Exploramos desde los **acuíferos subterráneos** hasta los ecosistemas urbanos. Nuestros proyectos integran geofísica, modelación molecular y tecnologías computacionales para comprender y proteger nuestros recursos hídricos.",
             "boton_texto": "🔬 Descubre la ciencia que **transforma territorios**",
             "boton_enlace": "./investigacion.html"
         },
         {
             "imagen": "img/Slide3.jpg",
-            "titulo": "Innovación continua",
+            "titulo": "Innovación 🚀 continua",
             "descripcion": "Nuestro equipo no para de crecer y evolucionar. Cada **semana**, cada **mes**, generamos nuevos *insights* y descubrimientos que impulsan nuestra comprensión de los **recursos hídricos**.",
             "boton_texto": "📢 **Entérate de las últimas novedades**",
             "boton_enlace": "./noticias.html"

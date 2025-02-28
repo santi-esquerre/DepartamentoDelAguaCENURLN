@@ -93,4 +93,55 @@ const renderAboutPage = (req, res) => {
   });
 };
 
-module.exports = { renderLicenciatura, renderIndex, renderAboutPage };
+// Función para cargar y procesar los datos del JSON
+const renderLabAguaPage = (req, res) => {
+  // Ruta del JSON de datos
+  const dataFilePath = path.join(
+    __dirname,
+    "../data/laboratoriodeaguaysuelos.json"
+  );
+
+  fs.readFile(dataFilePath, "utf8", (err, data) => {
+    if (err) {
+      console.error("Error al leer el archivo JSON:", err);
+      return res.status(500).send("Error al cargar los datos del laboratorio.");
+    }
+
+    try {
+      let jsonData = JSON.parse(data);
+
+      // Aplicar Markdown a cada sección de contenido
+      jsonData.titulo = marked.parse(jsonData.titulo || "");
+      jsonData.subtitulo = marked.parse(jsonData.subtitulo || "");
+
+      jsonData.contenido = jsonData.contenido.map((seccion) =>
+        marked.parse(seccion || "")
+      );
+
+      jsonData.secciones = jsonData.secciones.map((seccion) => ({
+        id: seccion.id,
+        titulo: marked.parse(seccion.titulo || ""),
+        contenido: marked.parse(seccion.contenido || ""),
+        enlaces: seccion.enlaces
+          ? seccion.enlaces.map((enlace) => ({
+              texto: marked.parseInline(enlace.texto || ""),
+              url: enlace.url
+            }))
+          : null
+      }));
+
+      // Renderizar la plantilla con los datos procesados
+      res.render("laboratorio_de_agua_y_suelos", jsonData);
+    } catch (parseError) {
+      console.error("Error al parsear el JSON:", parseError);
+      res.status(500).send("Error al procesar los datos.");
+    }
+  });
+};
+
+module.exports = {
+  renderLicenciatura,
+  renderIndex,
+  renderAboutPage,
+  renderLabAguaPage
+};

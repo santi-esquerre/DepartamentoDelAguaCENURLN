@@ -9,6 +9,7 @@ function loadPost() {
   fetch(`/novedades/${postID}`)
     .then((res) => res.json())
     .then((data) => {
+      console.log(data);
       const post = data[0];
       const article_container = document.getElementById("article-container");
 
@@ -46,7 +47,7 @@ function formatDateToSpanish(dateString) {
     "Miércoles",
     "Jueves",
     "Viernes",
-    "Sábado",
+    "Sábado"
   ];
   const months = [
     "Enero",
@@ -60,7 +61,7 @@ function formatDateToSpanish(dateString) {
     "Septiembre",
     "Octubre",
     "Noviembre",
-    "Diciembre",
+    "Diciembre"
   ];
 
   const date = new Date(dateString);

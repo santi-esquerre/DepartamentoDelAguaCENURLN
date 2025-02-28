@@ -16,7 +16,7 @@
   font-size: 24px;
   transition: 0.3s color;
   color: var(--main-color);
-  max-width: 15vw;
+  max-width: 20vw;
 }
 
 .login-button {
@@ -340,4 +340,26 @@
   width: 100%;
   height: 100%;
   object-fit: cover; /* Corta la imagen y la centra */
+}
+
+/* Asegura que .media ocupe todo el ancho disponible y centre su contenido */
+.media {
+  display: flex;
+  justify-content: center; /* Centra horizontalmente el contenido */
+  align-items: center; /* Centra verticalmente el contenido */
+  width: 100%;
+  height: 40vh;
+  max-height: 60vw;
+  margin: 20px auto; /* Centra el bloque .media en la página */
+}
+
+/* Asegura que los iframes y demás contenido multimedia sean responsivos */
+.media iframe,
+.media img,
+.media video {
+  width: 50vw;
+  min-width: 300px; /* Mínimo tamaño en pantallas pequeñas */
+  max-width: 800px; /* Máximo tamaño en pantallas grandes */
+  height: 100%; /* Mantiene la proporción */
+  display: block; /* Evita espacios extra alrededor del contenido */
 }

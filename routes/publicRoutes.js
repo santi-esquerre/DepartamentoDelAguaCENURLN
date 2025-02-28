@@ -6,7 +6,8 @@ const contactController = require("../controllers/contactController");
 const {
   renderLicenciatura,
   renderIndex,
-  renderAboutPage
+  renderAboutPage,
+  renderLabAguaPage
 } = require("../controllers/renderController");
 
 // Ruta para la Licenciatura en Recursos Hídricos y Riego
@@ -14,6 +15,7 @@ router.get("/", renderIndex);
 router.get("/index.html", renderIndex);
 router.get("/licenciaturarhyr", renderLicenciatura);
 router.get("/nosotros", renderAboutPage);
+router.get("/laboratorioaguaysuelos", renderLabAguaPage);
 
 router.get("/difusiones", otherControllers.getDifusiones);
 router.get("/proyectos", otherControllers.getProyectos);

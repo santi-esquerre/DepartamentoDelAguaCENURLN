@@ -9,8 +9,7 @@
     <link
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
       rel="stylesheet"
-      crossorigin="anonymous"
-    />
+      crossorigin="anonymous" />
     <link rel="stylesheet" href="/css/style.css" />
   </head>
   <body>
@@ -26,13 +25,11 @@
            background: url('<%- seccion_principal.imagen_fondo %>') no-repeat center center/cover; 
          <% } else { %> 
            background-color: #343a40; /* Gris oscuro de Bootstrap */
-         <% } %>"
-      >
+         <% } %>">
         <!-- Capa de superposición oscura (solo si hay imagen de fondo) -->
         <% if (seccion_principal.imagen_fondo) { %>
         <div
-          class="position-absolute top-0 start-0 w-100 h-100 bg-dark opacity-50"
-        ></div>
+          class="position-absolute top-0 start-0 w-100 h-100 bg-dark opacity-50"></div>
         <% } %>
 
         <div class="container text-center position-relative">
@@ -61,8 +58,7 @@
             </ul>
             <div
               class="ratio ratio-16x9"
-              style="max-height: 315px; overflow: hidden"
-            >
+              style="max-height: 315px; overflow: hidden">
               <iframe
                 src="<%- estructura.video %>"
                 title="YouTube video player"
@@ -70,8 +66,7 @@
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                 referrerpolicy="strict-origin-when-cross-origin"
                 allowfullscreen
-                class="rounded-bottom"
-              >
+                class="rounded-bottom">
               </iframe>
             </div>
           </div>
@@ -89,26 +84,22 @@
                   class="accordion-button bg-light"
                   type="button"
                   data-bs-toggle="collapse"
-                  data-bs-target="#<%- seccion.id %>"
-                >
+                  data-bs-target="#<%- seccion.id %>">
                   <h4 class="text-primary"><%- seccion.titulo %></h4>
                 </button>
               </div>
               <div
                 id="<%- seccion.id %>"
                 class="accordion-collapse collapse"
-                data-bs-parent="#secciones_lista"
-              >
+                data-bs-parent="#secciones_lista">
                 <div class="accordion-body">
-                  <p><%- seccion.contenido %></p>
-                  <% if (seccion.enlaces) { %>
+                  <%- seccion.contenido %> <% if (seccion.enlaces) { %>
                   <hr />
                   <div class="dropdown">
                     <button
                       class="btn btn-primary dropdown-toggle"
                       type="button"
-                      data-bs-toggle="dropdown"
-                    >
+                      data-bs-toggle="dropdown">
                       Más Información
                     </button>
                     <ul class="dropdown-menu">
@@ -161,7 +152,9 @@
     </main>
 
     <div id="footer"></div>
-
+    <script>
+      localStorage.setItem("activeNavItem", "enseñanza");
+    </script>
     <script src="/js/navbar.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
   </body>
