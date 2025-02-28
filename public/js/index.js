@@ -29,7 +29,7 @@ function generateBlogHTML(posts) {
       const img = document.createElement("img");
       img.src = post.contenido.match(imgRegex)
         ? post.contenido.match(imgRegex)[1]
-        : "img/logo_LRHyR.png";
+        : "img/logo_DEP_DEL_AGUA_grande.jpg";
       img.alt = post.titulo;
       img.className = "article-image";
 
@@ -69,7 +69,7 @@ document.getElementById("newsletter-form").addEventListener("submit", (e) => {
   fetch("/suscribirse", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ email }),
+    body: JSON.stringify({ email })
   })
     .then((response) => response.json())
     .then((data) => {

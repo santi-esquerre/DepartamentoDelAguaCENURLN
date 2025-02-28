@@ -21,7 +21,7 @@ function generateBlogHTML(posts) {
       const img = document.createElement("img");
       img.src = post.contenido.match(imgRegex)
         ? post.contenido.match(imgRegex)[1]
-        : "img/logo_LRHyR.png";
+        : "img/logo_DEP_DEL_AGUA_grande.jpg";
       img.alt = post.titulo;
       img.className = "article-image";
 
