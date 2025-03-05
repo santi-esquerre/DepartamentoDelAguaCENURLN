@@ -9,8 +9,11 @@ const {
   renderAboutPage,
   renderLabAguaPage
 } = require("../controllers/renderController");
+const { generateSitemap } = require("../controllers/sitemapController");
 
-// Ruta para la Licenciatura en Recursos Hídricos y Riego
+// Ruta para servir el sitemap.xml
+router.get("/sitemap.xml", generateSitemap);
+
 router.get("/", renderIndex);
 router.get("/index.html", renderIndex);
 router.get("/licenciaturarhyr", renderLicenciatura);

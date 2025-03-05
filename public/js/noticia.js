@@ -1,9 +1,5 @@
-let postID = getQueryParam("id");
-if (postID) {
-  localStorage.setItem("postID", postID);
-} else {
-  postID = localStorage.getItem("postID");
-}
+let postID = getQueryParam("id") || localStorage.getItem("postID");
+localStorage.setItem("postID", postID);
 
 function loadPost() {
   fetch(`/novedades/${postID}`)

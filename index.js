@@ -5,7 +5,6 @@ const app = express();
 const bodyParser = require("body-parser");
 const https = require("https");
 const fs = require("fs");
-const { marked } = require("marked");
 
 const loginRoutes = require("./routes/loginRoutes");
 const jsonRoutes = require("./routes/jsonRoutes");
@@ -48,7 +47,7 @@ app.use("/", publicRoutes); // Rutas públicas sin protección
 // Cargar el certificado y la clave
 const options = {
   key: fs.readFileSync("./certs/key.pem"), // Ruta a la clave privada
-  cert: fs.readFileSync("./certs/cert.pem"), // Ruta al certificado
+  cert: fs.readFileSync("./certs/cert.pem") // Ruta al certificado
 };
 
 app.get("/", (req, res) => {

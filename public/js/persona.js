@@ -1,5 +1,6 @@
 function cargarPersona() {
-  const id = localStorage.getItem("idPersona");
+  const id = getQueryParam("id") || localStorage.getItem("idPersona");
+  localStorage.setItem("idPersona", id);
 
   fetch(`/persona/${id}`)
     .then((response) => {
@@ -120,4 +121,10 @@ function formatDate(dateString) {
   const month = String(date.getMonth() + 1).padStart(2, "0"); // Los meses son de 0 a 11
   const year = date.getFullYear();
   return `${day}/${month}/${year}`;
+}
+
+// Función para obtener parámetros de la URL
+function getQueryParam(param) {
+  const urlParams = new URLSearchParams(window.location.search);
+  return urlParams.get(param);
 }
