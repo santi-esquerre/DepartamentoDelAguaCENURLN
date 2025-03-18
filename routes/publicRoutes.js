@@ -17,6 +17,7 @@ router.get("/sitemap.xml", generateSitemap);
 router.get("/", renderIndex);
 router.get("/index.html", renderIndex);
 router.get("/licenciaturarhyr", renderLicenciatura);
+router.get("/lcha", renderLicenciatura);
 router.get("/nosotros", renderAboutPage);
 router.get("/laboratorioaguaysuelos", renderLabAguaPage);
 
