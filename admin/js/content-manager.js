@@ -1,43 +1,84 @@
 const token = localStorage.getItem("token");
-const editor = new JSONEditor(document.getElementById("jsoneditor"), {
-  mode: "tree",
-  modes: ["code", "tree"]
-});
-const jsonSelector = document.getElementById("jsonSelector");
+let editor;
 
-// Cargar lista de archivos JSON
 fetch("/api/list-json", { headers: { Authorization: token } })
   .then((res) => res.json())
   .then((files) => {
     files.forEach((file) => {
-      const option = document.createElement("option");
-      option.value = file;
-      option.textContent = file;
-      jsonSelector.appendChild(option);
+      if (file.endsWith(".json") && !file.includes("schema")) {
+        const option = document.createElement("option");
+        option.value = file;
+        option.textContent = file;
+        jsonSelector.appendChild(option);
+      }
     });
-    loadJsonFile(files[0]);
+    loadJsonAndSchema(files[0]);
   });
 
-jsonSelector.addEventListener("change", () => loadJsonFile(jsonSelector.value));
+jsonSelector.addEventListener("change", () => {
+  loadJsonAndSchema(jsonSelector.value);
+});
 
-function loadJsonFile(filename) {
-  fetch(`/api/get-json/${filename}`, {
-    headers: { Authorization: token }
-  })
-    .then((res) => res.json())
-    .then((data) => editor.set(data))
-    .catch((err) => alert("Error al cargar el JSON: " + err));
+function loadJsonAndSchema(filename) {
+  const schemaFile = filename.replace(".json", ".schema.json");
+
+  Promise.all([
+    fetch(`/api/get-json/${schemaFile}`, {
+      headers: { Authorization: token }
+    }).then((res) => res.json()),
+    fetch(`/api/get-json/${filename}`, {
+      headers: { Authorization: token }
+    }).then((res) => res.json())
+  ]).then(([schema, jsonData]) => {
+    if (editor) editor.destroy();
+
+    editor = new JSONEditor(document.getElementById("editor_holder"), {
+      schema: schema,
+      startval: jsonData,
+      theme: "bootstrap5",
+      iconlib: "fontawesome4",
+      show_errors: "interaction",
+      disable_edit_json: true,
+      disable_properties: true,
+      // compact: true,
+      object_layout: "normal", // estilo árbol
+      array_controls_top: true, // botones de agregar arriba de los arrays
+      no_additional_properties: false // permitir agregar propiedades adicionales
+    });
+  });
 }
 
 document.getElementById("save-json").addEventListener("click", () => {
+  const json = editor.getValue();
   fetch(`/api/save-json/${jsonSelector.value}`, {
     method: "POST",
     headers: { Authorization: token, "Content-Type": "application/json" },
-    body: JSON.stringify(editor.get())
+    body: JSON.stringify(json)
   })
     .then((res) => res.json())
     .then((data) => alert(data.message));
 });
+
+// Configuración global para markdown
+JSONEditor.defaults.editors.string.options = {
+  ...JSONEditor.defaults.editors.string.options,
+  wysiwyg: true,
+  format: "markdown",
+  simplemde: {
+    toolbar: [
+      "bold",
+      "italic",
+      "heading",
+      "|",
+      "link",
+      "quote",
+      "|",
+      "preview",
+      "guide"
+    ],
+    spellChecker: false
+  }
+};
 
 // Gestión de Archivos
 function uploadFile() {
