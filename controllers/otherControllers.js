@@ -127,8 +127,7 @@ exports.createNewSubscriber = (req, res) => {
     if (err) {
       return res.status(500).send(err);
     }
-    res.status(201).send("Subscriber created successfully");
-    res.json(result);
+    res.status(201).send("¡Gracias por suscribirte!");
   });
 };
 

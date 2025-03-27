@@ -71,9 +71,9 @@ document.getElementById("newsletter-form").addEventListener("submit", (e) => {
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ email })
   })
-    .then((response) => response.json())
+    .then((response) => response.text())
     .then((data) => {
-      alert(data.sqlMessage || "¡Gracias por suscribirte!");
+      alert(data || "¡Gracias por suscribirte!");
     })
     .catch((error) => console.error("Error:", error));
 });
