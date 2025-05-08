@@ -399,6 +399,7 @@ document.getElementById("addForm").addEventListener("submit", (e) => {
   let table, body;
   table = eliminarTildes(data.TableFlag);
 
+
   if (data.recordType === "new") {
     data.ID = window.generateUUID();
     fetch(`/api/${table}`, {
@@ -451,20 +452,24 @@ document.getElementById("addForm").addEventListener("submit", (e) => {
       alert("Table not found");
   }
 
+  body = JSON.stringify(body);
+
   fetch(`/api/persona/${userID}/${table}`, {
     method: "POST",
     headers: {
       Authorization: authToken, // Incluye el token en el encabezado
       "Content-Type": "application/json",
     },
-    body: JSON.stringify(body),
+    body: body,
   })
     .then((res) => res.json())
     .then((data) => {
       console.log(data);
     });
 
-  window.location.reload();
+  
+    window.location.reload();
+
 });
 
 document.getElementById("deleteForm").addEventListener("submit", (e) => {
