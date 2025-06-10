@@ -399,7 +399,6 @@ document.getElementById("addForm").addEventListener("submit", (e) => {
   let table, body;
   table = eliminarTildes(data.TableFlag);
 
-
   if (data.recordType === "new") {
     data.ID = window.generateUUID();
     fetch(`/api/${table}`, {
@@ -467,9 +466,7 @@ document.getElementById("addForm").addEventListener("submit", (e) => {
       console.log(data);
     });
 
-  
-    window.location.reload();
-
+  window.location.reload();
 });
 
 document.getElementById("deleteForm").addEventListener("submit", (e) => {
@@ -531,15 +528,15 @@ function loadUserInfo(persona) {
   const imgFoto = document.getElementById("profile-photo");
   const h1nombre = document.getElementById("nombre");
   const h3titulo = document.getElementById("titulo");
-  const pedad = document.getElementById("edad");
+  // const pedad = document.getElementById("edad");
   const pdescripcion = document.getElementById("descripcion");
 
   imgFoto.src = `data:image/png;base64,${persona.Foto}`;
   h1nombre.textContent = persona.Nombre;
   h3titulo.textContent = persona.Título;
-  pedad.textContent = persona.FechaNacimiento
-    ? `Edad: ${calcularEdad(persona.FechaNacimiento)} años`
-    : "";
+  // pedad.textContent = persona.FechaNacimiento
+  // ? `Edad: ${calcularEdad(persona.FechaNacimiento)} años`
+  // : "";
   pdescripcion.textContent = persona.Descripción;
 }
 
@@ -1111,16 +1108,16 @@ function RemoveRecordFromDeleteList(ID) {
 
 //UTILITY FUNCTIONS:
 
-function calcularEdad(fechaNacimiento) {
-  const hoy = new Date();
-  const nacimiento = new Date(fechaNacimiento);
-  let edad = hoy.getFullYear() - nacimiento.getFullYear();
-  const mes = hoy.getMonth() - nacimiento.getMonth();
-  if (mes < 0 || (mes === 0 && hoy.getDate() < nacimiento.getDate())) {
-    edad--;
-  }
-  return edad;
-}
+// function calcularEdad(fechaNacimiento) {
+//   const hoy = new Date();
+//   const nacimiento = new Date(fechaNacimiento);
+//   let edad = hoy.getFullYear() - nacimiento.getFullYear();
+//   const mes = hoy.getMonth() - nacimiento.getMonth();
+//   if (mes < 0 || (mes === 0 && hoy.getDate() < nacimiento.getDate())) {
+//     edad--;
+//   }
+//   return edad;
+// }
 
 function formatDate(dateString) {
   if (!dateString) return "-";

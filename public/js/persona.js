@@ -14,16 +14,16 @@ function cargarPersona() {
       const imgFoto = document.getElementById("profile-photo");
       const h1nombre = document.getElementById("nombre");
       const h3titulo = document.getElementById("titulo");
-      const pedad = document.getElementById("edad");
+      // const pedad = document.getElementById("edad");
       const pdescripcion = document.getElementById("descripcion");
       const aCV = document.getElementById("cv");
 
       imgFoto.src = `data:image/png;base64,${persona.Foto}`;
       h1nombre.textContent = persona.Nombre;
       h3titulo.textContent = persona.Título;
-      pedad.textContent = persona.FechaNacimiento
-        ? `Edad: ${calcularEdad(persona.FechaNacimiento)} años`
-        : "";
+      // pedad.textContent = persona.FechaNacimiento
+      // ? `Edad: ${calcularEdad(persona.FechaNacimiento)} años`
+      // : "";
       pdescripcion.textContent = persona.Descripción;
       aCV.href = persona.CV || "#";
     })
@@ -103,16 +103,16 @@ function cargarPersona() {
 }
 document.addEventListener("DOMContentLoaded", cargarPersona);
 
-function calcularEdad(fechaNacimiento) {
-  const hoy = new Date();
-  const nacimiento = new Date(fechaNacimiento);
-  let edad = hoy.getFullYear() - nacimiento.getFullYear();
-  const mes = hoy.getMonth() - nacimiento.getMonth();
-  if (mes < 0 || (mes === 0 && hoy.getDate() < nacimiento.getDate())) {
-    edad--;
-  }
-  return edad;
-}
+// function calcularEdad(fechaNacimiento) {
+//   const hoy = new Date();
+//   const nacimiento = new Date(fechaNacimiento);
+//   let edad = hoy.getFullYear() - nacimiento.getFullYear();
+//   const mes = hoy.getMonth() - nacimiento.getMonth();
+//   if (mes < 0 || (mes === 0 && hoy.getDate() < nacimiento.getDate())) {
+//     edad--;
+//   }
+//   return edad;
+// }
 
 function formatDate(dateString) {
   if (!dateString) return "-";
