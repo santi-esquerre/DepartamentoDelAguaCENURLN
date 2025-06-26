@@ -23,115 +23,100 @@ document.addEventListener("DOMContentLoaded", () => {
   //#endregion
 
   //#region Fetch user diffusion
-  fetch("/api/describe/difusióncientífica", {
+  fetch("/api/describe/difusioncientifica", {
     method: "GET",
     headers: {
-      Authorization: authToken, // Incluye el token en el encabezado
+      Authorization: authToken,
       "Content-Type": "application/json",
     },
   })
-    .then((response) => response.json())
-    .then((data) => {
-      console.log(data);
-      const tablehead = document.querySelector("#inv-table #table-head tr");
-      tablehead.innerHTML += data
-        .map((header) => `<th>${header}</th>`)
-        .join("");
+    .then((res) => res.json())
+    .then((fields) => {
+      const th = document.querySelector("#inv-table #table-head tr");
+      th.innerHTML += fields.map((f) => `<th>${f}</th>`).join("");
     })
-    .catch((error) => {
-      console.error("Error fetching headers:", error);
-    });
+    .catch(console.error);
+
   fetch(`/api/persona/${userID}/difusioncientifica`, {
     method: "GET",
     headers: {
-      Authorization: authToken, // Incluye el token en el encabezado
+      Authorization: authToken,
       "Content-Type": "application/json",
     },
   })
     .then((res) => res.json())
     .then((data) => {
-      const tablebody = document.querySelector("#inv-table #table-body");
-      data.forEach((diffusion) => {
+      const tbody = document.querySelector("#inv-table #table-body");
+      let i = 1;
+      data.forEach((diff) => {
         const row = document.createElement("tr");
-        let i = 1;
-        row.innerHTML = `<td>
-                  <span class="custom-checkbox">
-                    <input
-                      type="checkbox"
-                      id="checkbox${i}"
-                      name="options[]"
-                      value="${diffusion.ID}"
-                    />
-                    <label for="checkbox${i}"></label>
-                  </span>
-                </td>
-                <td>${diffusion.Título}</td>
-                <td>${formatDate(diffusion.FechaPublicación)}</td>
-                <td>${diffusion.Descripción}</td>
-                <td>${diffusion.Tipo}</td>
-                <td>
-                  <a
-                    href="${diffusion.Link}"
-                    >Link</a
-                  >
-                </td>
-                <td>${diffusion.ID}</td>
-                <td>
-                  <a href="#editModal" class="edit" data-toggle="modal" onclick='loadDiffusionToEdit(${JSON.stringify(
-                    diffusion
-                  )});'
-                    ><i
-                      class="material-icons"
-                      data-toggle="tooltip"
-                      title="Edit"
-                      >&#xE254;</i
-                    ></a
-                  >
-                  <a
-                    href="#deleteModal"
-                    class="delete"
-                    data-toggle="modal"
-                    onclick="setRecordToDelete('difusióncientífica', '${
-                      diffusion.ID
-                    }');"
-                    ><i
-                      class="material-icons"
-                      data-toggle="tooltip"
-                      title="Delete"
-                      >&#xE872;</i
-                    ></a
-                  >
-                </td>`;
+        row.innerHTML = `
+        <td>
+          <span class="custom-checkbox">
+            <input
+              type="checkbox"
+              id="checkbox${i}"
+              name="options[]"
+              value="${diff.id}"
+            />
+            <label for="checkbox${i}"></label>
+          </span>
+        </td>
+        <td>${diff.id}</td>
+        <td>${diff.titulo}</td>
+        <td>${diff.journal || ""}</td>
+        <td>${diff.anio || ""}</td>
+        <td>${diff.doi || ""}</td>
+        <td><a href="${diff.url_pdf || "#"}">PDF</a></td>
+        <td>${diff.resumen}</td>
+        <td>${diff.cita_formateada || ""}</td>
+        <td>${diff.estado}</td>
+        <td>${diff.autores_externos}</td>
+        <td>${diff.creado_en}</td>
+        <td>${diff.actualizado_en}</td>
+        <td>
+          <a
+            href="#editModal"
+            class="edit"
+            data-toggle="modal"
+            onclick='loadDiffusionToEdit(${JSON.stringify(diff)});'
+          >
+            <i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i>
+          </a>
+          <a
+            href="#deleteModal"
+            class="delete"
+            data-toggle="modal"
+            onclick="setRecordToDelete('difusioncientifica', '${diff.id}');"
+          >
+            <i class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i>
+          </a>
+        </td>`;
         i++;
-        tablebody.appendChild(row);
+        tbody.appendChild(row);
       });
 
-      tablebody
-        .querySelectorAll('input[type="checkbox"]')
-        .forEach((checkbox) => {
-          checkbox.addEventListener("change", (e) => {
-            if (e.target.checked) {
-              AddRecordToDeleteList("difusióncientífica", e.target.value);
-            } else {
-              RemoveRecordFromDeleteList(e.target.value);
-            }
+      tbody.querySelectorAll('input[type="checkbox"]').forEach((cb) =>
+        cb.addEventListener("change", (e) => {
+          if (e.target.checked)
+            AddRecordToDeleteList("difusioncientifica", e.target.value);
+          else RemoveRecordFromDeleteList(e.target.value);
+        })
+      );
+
+      document
+        .getElementById("inv-table")
+        .querySelector("#selectAll")
+        .addEventListener("change", (e) => {
+          tbody.querySelectorAll('input[type="checkbox"]').forEach((cb) => {
+            cb.checked = e.target.checked;
+            if (e.target.checked)
+              AddRecordToDeleteList("difusioncientifica", cb.value);
+            else RemoveRecordFromDeleteList(cb.value);
           });
         });
-
-      const diffTable = document.getElementById("inv-table");
-      diffTable.querySelector("#selectAll").addEventListener("change", (e) => {
-        tablebody
-          .querySelectorAll('input[type="checkbox"]')
-          .forEach((checkbox) => {
-            checkbox.checked = e.target.checked;
-            if (e.target.checked) {
-              AddRecordToDeleteList("difusióncientífica", checkbox.value);
-            } else {
-              RemoveRecordFromDeleteList(e.target.value);
-            }
-          });
-      });
-    });
+    })
+    .catch(console.error);
   //#endregion
 
   //#region Fetch user projects
@@ -416,6 +401,8 @@ document.getElementById("addForm").addEventListener("submit", (e) => {
     data.existingRecordID = data.ID;
   }
 
+  console.log(data);
+
   switch (table) {
     case "difusioncientifica":
       body = {
@@ -452,6 +439,7 @@ document.getElementById("addForm").addEventListener("submit", (e) => {
   }
 
   body = JSON.stringify(body);
+  console.log(body);
 
   fetch(`/api/persona/${userID}/${table}`, {
     method: "POST",
@@ -542,204 +530,169 @@ function loadUserInfo(persona) {
 
 function loadDiffusionToAdd() {
   const formbody = document.querySelector("#addForm .modal-body");
-
   formbody.innerHTML = `
-                <div class="form-group">
-                  <input
-                    id="TableFlag"
-                    type="hidden"
-                    name="TableFlag"
-                    value="difusióncientífica"
-                  />
-                  <label>Título</label>
-                  <input
-                    id="AddTitleInput"
-                    type="text"
-                    name="Título"
-                    class="form-control"
-                    required
-                  />
-                </div>
-                <div class="form-group">
-                  <label>Fecha de Publicación</label>
-                  <input
-                    id="AddPublishDateInput"
-                    type="date"
-                    name="FechaPublicación"
-                    class="form-control"
-                  />
-                </div>
-                <div class="form-group">
-                  <label>Tipo</label>
-                  <input
-                    id="AddTypeInput"
-                    type="text"
-                    name="Tipo"
-                    class="form-control"
-                  />
-                </div>
-
-                <div class="form-group">
-                  <label>Link</label>
-                  <input 
-                    id="AddLinkInput" 
-                    type="url" 
-                    name="Link"
-                    class="form-control" 
-                  />
-                </div>
-                <div class="form-group">
-                  <label>Descripción</label>
-                  <textarea
-                    id="AddDescriptionInput"
-                    class="form-control"
-                    name="Descripción"
-                  ></textarea>
-                </div>
-                <div class="form-group">
-                  <label>Tipo de Registro</label>
-                  <div>
-                    <label class="radio-inline">
-                      <input
-                        type="radio"
-                        name="recordType"
-                        value="new"
-                        checked
-                      />
-                      Nuevo
-                    </label>
-                    <label class="radio-inline">
-                      <input type="radio" name="recordType" value="existing" />
-                      Existente
-                    </label>
-                  </div>
-                </div>
-                <div
-                  class="form-group"
-                  id="existingRecordSelect"
-                  style="display: none"
-                >
-                  <label>Seleccionar Registro</label>
-                  <select id="existingRecordDropdown" name="existingRecordID" class="form-control" placeholder>
-                    <option value="-1">Seleccione un registro</option>
-                    <!-- Options will be populated dynamically -->
-                  </select>
-                </div>
-              `;
-
-  const recordTypeRadios = formbody.querySelectorAll(
-    'input[name="recordType"]'
+    <div class="form-group">
+      <input type="hidden" name="TableFlag" value="difusióncientífica" />
+      <label>Título</label>
+      <input type="text" name="titulo" class="form-control" required />
+    </div>
+    <div class="form-group">
+      <label>Journal</label>
+      <input type="text" name="journal" class="form-control" />
+    </div>
+    <div class="form-group">
+      <label>Año</label>
+      <input type="number" name="anio" class="form-control" />
+    </div>
+    <div class="form-group">
+      <label>DOI</label>
+      <input type="text" name="doi" class="form-control" />
+    </div>
+    <div class="form-group">
+      <label>URL PDF</label>
+      <input type="url" name="url_pdf" class="form-control" />
+    </div>
+    <div class="form-group">
+      <label>Resumen</label>
+      <textarea name="resumen" class="form-control"></textarea>
+    </div>
+    <div class="form-group">
+      <label>Cita Formateada</label>
+      <textarea name="cita_formateada" class="form-control"></textarea>
+    </div>
+    <div class="form-group">
+      <label>Estado</label>
+      <select name="estado" class="form-control">
+        <option value="borrador">borrador</option>
+        <option value="en_revision">en_revision</option>
+        <option value="aceptada">aceptada</option>
+        <option value="publicada">publicada</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label>Autores Externos (JSON)</label>
+      <textarea name="autores_externos" class="form-control" placeholder='[{"nombre":"...","afiliacion":"..."}]'></textarea>
+    </div>
+    <div class="form-group">
+      <label>Tipo de Registro</label>
+      <div>
+        <label class="radio-inline">
+          <input type="radio" name="recordType" value="new" checked /> Nuevo
+        </label>
+        <label class="radio-inline">
+          <input type="radio" name="recordType" value="existing" /> Existente
+        </label>
+      </div>
+    </div>
+    <div id="existingRecordSelect" class="form-group" style="display:none">
+      <label>Seleccionar Registro</label>
+      <select id="existingRecordDropdown" name="existingRecordID" class="form-control">
+        <option value="">Seleccione un registro</option>
+      </select>
+    </div>
+  `;
+  const radios = formbody.querySelectorAll('input[name="recordType"]');
+  const inputs = formbody.querySelectorAll(
+    "input:not([type=radio]):not([type=hidden]), textarea, select"
   );
-
-  const existingRecordSelect = formbody.querySelector("#existingRecordSelect");
-  const inputsAndTextareas = formbody.querySelectorAll(
-    "input:not([type='radio']):not([type='hidden']), textarea"
-  );
-
-  recordTypeRadios.forEach((radio) => {
-    radio.addEventListener("change", function () {
-      if (this.value === "existing") {
-        inputsAndTextareas.forEach((input) => (input.disabled = true));
-        existingRecordSelect.style.display = "block";
-      } else {
-        inputsAndTextareas.forEach((input) => (input.disabled = false));
-        existingRecordSelect.style.display = "none";
-      }
+  const selector = formbody.querySelector("#existingRecordSelect");
+  radios.forEach((r) => {
+    r.addEventListener("change", () => {
+      const disable = r.value === "existing";
+      inputs.forEach((el) => {
+        if (el.name !== "existingRecordID") el.disabled = disable;
+      });
+      selector.style.display = disable ? "block" : "none";
     });
   });
-
-  fetch(`/api/difusióncientífica`, {
+  fetch("/api/difusioncientifica", {
     method: "GET",
-    headers: {
-      Authorization: authToken, // Incluye el token en el encabezado
-      "Content-Type": "application/json",
-    },
+    headers: { Authorization: authToken, "Content-Type": "application/json" },
   })
-    .then((res) => res.json())
-    .then((data) => {
-      const select = formbody.querySelector("#existingRecordDropdown");
-      data.forEach((diffusion) => {
-        const option = document.createElement("option");
-        option.value = diffusion.ID;
-        option.textContent = diffusion.Título;
-        select.appendChild(option);
+    .then((r) => r.json())
+    .then((list) => {
+      const sel = formbody.querySelector("#existingRecordDropdown");
+      list.forEach((d) => {
+        const opt = document.createElement("option");
+        opt.value = d.id;
+        opt.textContent = d.titulo;
+        sel.appendChild(opt);
       });
-    });
+    })
+    .catch(console.error);
 }
 
 function loadDiffusionToEdit(diffusion) {
   const formbody = document.querySelector("#editForm .modal-body");
-  // const diffusion = JSON.parse(diffusionJSON);
-  console.log(diffusion);
-
   formbody.innerHTML = `
-                <div class="form-group">
-                  <input
-                    id="TableFlag"
-                    type="hidden"
-                    name="TableFlag"
-                    value="difusióncientífica"
-                  />
-                  <input
-                    id="RegID"
-                    type="hidden"
-                    name="RegID"
-                    value="${diffusion.ID}"
-                  />
-                  <label>Título</label>
-                  <input
-                    id="AddTitleInput"
-                    type="text"
-                    name="Título"
-                    class="form-control"
-                    value="${diffusion.Título}"
-                    required
-                  />
-                </div>
-                <div class="form-group">
-                  <label>Fecha de Publicación</label>
-                  <input
-                    id="AddPublishDateInput"
-                    type="date"
-                    name="FechaPublicación"
-                    class="form-control"
-                    value="${
-                      new Date(diffusion.FechaPublicación)
-                        .toISOString()
-                        .split("T")[0]
-                    }"
-                  />
-                </div>
-                <div class="form-group">
-                  <label>Tipo</label>
-                  <input
-                    id="AddTypeInput"
-                    type="text"
-                    name="Tipo"
-                    class="form-control"
-                    value="${diffusion.Tipo}"
-                  />
-                </div>
-
-                <div class="form-group">
-                  <label>Link</label>
-                  <input 
-                    id="AddLinkInput" 
-                    type="url" 
-                    name="Link"
-                    class="form-control" 
-                    value="${diffusion.Link}"
-                  />
-                </div>
-                <div class="form-group">
-                  <label>Descripción</label>
-                  <textarea
-                    id="AddDescriptionInput"
-                    class="form-control"
-                    name="Descripción"
-                  >${diffusion.Descripción}</textarea>
-                </div>
-              `;
+    <input type="hidden" name="TableFlag" value="difusioncientifica" />
+    <input type="hidden" name="RegID" value="${diffusion.id}" />
+    <div class="form-group">
+      <label>Título</label>
+      <input type="text" name="titulo" class="form-control" value="${
+        diffusion.titulo
+      }" required />
+    </div>
+    <div class="form-group">
+      <label>Journal</label>
+      <input type="text" name="journal" class="form-control" value="${
+        diffusion.journal || ""
+      }" />
+    </div>
+    <div class="form-group">
+      <label>Año</label>
+      <input type="number" name="anio" class="form-control" value="${
+        diffusion.anio || ""
+      }" />
+    </div>
+    <div class="form-group">
+      <label>DOI</label>
+      <input type="text" name="doi" class="form-control" value="${
+        diffusion.doi || ""
+      }" />
+    </div>
+    <div class="form-group">
+      <label>URL PDF</label>
+      <input type="url" name="url_pdf" class="form-control" value="${
+        diffusion.url_pdf || ""
+      }" />
+    </div>
+    <div class="form-group">
+      <label>Resumen</label>
+      <textarea name="resumen" class="form-control">${
+        diffusion.resumen
+      }</textarea>
+    </div>
+    <div class="form-group">
+      <label>Cita Formateada</label>
+      <textarea name="cita_formateada" class="form-control">${
+        diffusion.cita_formateada || ""
+      }</textarea>
+    </div>
+    <div class="form-group">
+      <label>Estado</label>
+      <select name="estado" class="form-control">
+        <option value="borrador"${
+          diffusion.estado === "borrador" ? " selected" : ""
+        }>borrador</option>
+        <option value="en_revision"${
+          diffusion.estado === "en_revision" ? " selected" : ""
+        }>en_revision</option>
+        <option value="aceptada"${
+          diffusion.estado === "aceptada" ? " selected" : ""
+        }>aceptada</option>
+        <option value="publicada"${
+          diffusion.estado === "publicada" ? " selected" : ""
+        }>publicada</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label>Autores Externos (JSON)</label>
+      <textarea name="autores_externos" class="form-control">${
+        JSON.stringify(diffusion.autores_externos) || ""
+      }</textarea>
+    </div>
+  `;
 }
 
 function loadProjectToAdd() {

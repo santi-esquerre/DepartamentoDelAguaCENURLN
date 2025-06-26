@@ -2,30 +2,34 @@ const Models = require("../models/otherModels");
 
 exports.getAll = (req, res) => {
   Models.getAll(req.params.table, (err, results) => {
-    if (err) res.status(500).send(err);
+    if (err) return res.status(500).send(err);
     res.json(results);
   });
 };
 
 exports.describeTable = (req, res) => {
   Models.describeTable(req.params.table, (err, results) => {
-    if (err) res.status(500).send(err);
+    if (err) return res.status(500).send(err);
     results = results.map((result) => result.Field);
     res.json(results);
   });
 };
 
 exports.createNewDiffusion = (req, res) => {
-  const diffusion = [
-    req.body.Título || "Sin título",
-    req.body.FechaPublicación || new Date(),
-    req.body.Descripción || "Sin descripción",
-    req.body.Tipo || "Sin tipo",
-    req.body.Link || "Sin link",
-  ];
-  const uuid = req.body.ID;
-  Models.createNewDiffusion(diffusion, uuid, (err, results) => {
-    if (err) res.status(500).send(err);
+  const diffusion = {
+    ID: req.body.ID || "",
+    titulo: req.body.titulo || "Sin título",
+    journal: req.body.journal || "Sin journal",
+    anio: req.body.anio || new Date().getFullYear(),
+    doi: req.body.doi || "",
+    url_pdf: req.body.url_pdf || "",
+    resumen: req.body.resumen || "Sin resumen",
+    cita_formateada: req.body.cita_formateada || "",
+    estado: req.body.estado || "pendiente",
+    autores_externos: req.body.autores_externos || [],
+  };
+  Models.createNewDiffusion(diffusion, (err, results) => {
+    if (err) return res.status(500).send(err);
     res.json(results);
   });
 };
@@ -59,22 +63,26 @@ exports.createNewExtension = (req, res) => {
 
 exports.deleteRegister = (req, res) => {
   Models.deleteRegister(req.params.table, req.params.id, (err, results) => {
-    if (err) res.status(500).send(err);
+    if (err) return res.status(500).send(err);
     res.json(results);
   });
 };
 
 exports.updateDiffusion = (req, res) => {
-  const diffusion = [
-    req.body.Título || "Sin título",
-    req.body.FechaPublicación || new Date(),
-    req.body.Descripción || "Sin descripción",
-    req.body.Tipo || "Sin tipo",
-    req.body.Link || "Sin link",
-  ];
+  const diffusion = {
+    titulo: req.body.titulo || "Sin título",
+    journal: req.body.journal || "Sin journal",
+    anio: req.body.anio || new Date().getFullYear(),
+    doi: req.body.doi || "",
+    url_pdf: req.body.url_pdf || "",
+    resumen: req.body.resumen || "Sin resumen",
+    cita_formateada: req.body.cita_formateada || "",
+    estado: req.body.estado,
+    autores_externos: req.body.autores_externos || [],
+  };
   const id = req.params.id;
   Models.updateDiffusion(diffusion, id, (err, results) => {
-    if (err) res.status(500).send(err);
+    if (err) return res.status(500).send(err);
     res.json(results);
   });
 };
@@ -133,7 +141,7 @@ exports.createNewSubscriber = (req, res) => {
 
 exports.getDifusiones = (req, res) => {
   Models.getDifusiones((err, results) => {
-    if (err) res.status(500).send(err);
+    if (err) return res.status(500).send(err);
     res.json(results);
   });
 };

@@ -2,25 +2,48 @@ const db = require("../config/db");
 
 const OtherModels = {
   getAll: (table, callback) => {
-    db.query(`SELECT * FROM ${table}`, callback);
+    db.query(`SELECT * FROM \`${table}\``, callback);
   },
   BACKgetAll: (table) => {
     return new Promise((resolve, reject) => {
-      db.query(`SELECT * FROM ${table}`, (err, result) => {
-        if (err) {
-          return reject(err); // Rechaza la Promesa en caso de error
-        }
-        resolve(result); // Resuelve la Promesa con el resultado
+      db.query(`SELECT * FROM \`${table}\``, (err, result) => {
+        if (err) return reject(err);
+        resolve(result);
       });
     });
   },
   describeTable: (table, callback) => {
-    db.query(`DESCRIBE ${table}`, callback);
+    db.query(`DESCRIBE \`${table}\``, callback);
   },
-  createNewDiffusion: (diffusion, uuid, callback) => {
+  createNewDiffusion: (diffusion, callback) => {
+    const {
+      ID,
+      titulo,
+      journal,
+      anio,
+      doi,
+      url_pdf,
+      resumen,
+      cita_formateada,
+      estado,
+      autores_externos,
+    } = diffusion;
     db.query(
-      "INSERT INTO difusióncientífica (`Título`, `FechaPublicación`, `Descripción`, `Tipo`, `Link`, `ID`) values (?, ?)",
-      [diffusion, uuid],
+      `INSERT INTO difusioncientifica
+        (id, titulo, journal, anio, doi, url_pdf, resumen, cita_formateada, estado, autores_externos)
+       VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+      [
+        ID,
+        titulo,
+        journal,
+        anio,
+        doi,
+        url_pdf,
+        resumen,
+        cita_formateada,
+        estado,
+        JSON.stringify(autores_externos),
+      ],
       callback
     );
   },
@@ -39,9 +62,33 @@ const OtherModels = {
     );
   },
   updateDiffusion: (diffusion, id, callback) => {
+    const {
+      titulo,
+      journal,
+      anio,
+      doi,
+      url_pdf,
+      resumen,
+      cita_formateada,
+      estado,
+      autores_externos,
+    } = diffusion;
     db.query(
-      "UPDATE difusióncientífica SET `Título` = ?, `FechaPublicación` = ?, `Descripción` = ?, `Tipo` = ?, `Link` = ? WHERE ID = ?",
-      [...diffusion, id],
+      `UPDATE difusioncientifica
+        SET titulo = ?, journal = ?, anio = ?, doi = ?, url_pdf = ?, resumen = ?, cita_formateada = ?, estado = ?, autores_externos = ?
+       WHERE id = ?`,
+      [
+        titulo,
+        journal,
+        anio,
+        doi,
+        url_pdf,
+        resumen,
+        cita_formateada,
+        estado,
+        JSON.stringify(autores_externos),
+        id,
+      ],
       callback
     );
   },
@@ -60,10 +107,10 @@ const OtherModels = {
     );
   },
   deleteRegister: (table, id, callback) => {
-    db.query(`DELETE FROM ${table} WHERE ID = ?`, [id], callback);
+    db.query(`DELETE FROM \`${table}\` WHERE id = ?`, [id], callback);
   },
   getRegisterByID: (table, id, callback) => {
-    db.query(`SELECT * FROM ${table} WHERE ID = ?`, [id], callback);
+    db.query(`SELECT * FROM \`${table}\` WHERE id = ?`, [id], callback);
   },
   getRecentPosts: (limit, callback) => {
     db.query(
@@ -78,25 +125,25 @@ const OtherModels = {
   getDifusiones: (callback) => {
     db.query(
       `
-    SELECT 
-    d.Título AS DifusiónTítulo,
-    d.FechaPublicación,
-    d.Descripción,
-    d.Tipo,
-    d.Link,
-    GROUP_CONCAT(p.Nombre SEPARATOR ', ') AS Autores,
-    GROUP_CONCAT(p.ID SEPARATOR ', ') AS PersonasIDs
-    FROM 
-        departamentodelagua.difusióncientífica d
-    LEFT JOIN 
-        departamentodelagua.persona_difusión pd ON d.ID = pd.difusión_ID
-    LEFT JOIN 
-        departamentodelagua.persona p ON pd.persona_ID = p.ID
-    GROUP BY 
-        d.ID, d.Título, d.FechaPublicación, d.Descripción, d.Tipo, d.Link
-    ORDER BY 
-        d.FechaPublicación DESC;
-    `,
+      SELECT 
+        d.id,
+        d.titulo AS DifusionTitulo,
+        d.journal,
+        d.anio,
+        d.doi,
+        d.url_pdf,
+        d.resumen,
+        d.cita_formateada,
+        d.estado,
+        GROUP_CONCAT(p.Nombre SEPARATOR ', ') AS Autores,
+        GROUP_CONCAT(p.ID SEPARATOR ', ') AS PersonasIDs
+      FROM difusioncientifica d
+      LEFT JOIN difusioncientifica_persona dp ON d.id = dp.difusioncientifica_id
+      LEFT JOIN persona p ON dp.persona_id = p.ID
+      GROUP BY 
+        d.id, d.titulo, d.journal, d.anio, d.doi, d.url_pdf, d.resumen, d.cita_formateada, d.estado
+      ORDER BY d.creado_en DESC;
+      `,
       callback
     );
   },
@@ -147,10 +194,10 @@ const OtherModels = {
           u.id = r.materia_id
       GROUP BY 
           u.id, u.nombre, u.creditos, u.semestre;
-    `, callback
+    `,
+      callback
     );
-  }
-
+  },
 };
 
 module.exports = OtherModels;

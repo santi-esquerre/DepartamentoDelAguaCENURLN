@@ -4,37 +4,63 @@ const User = {
   getAll: (callback) => {
     db.query("SELECT * FROM persona", callback);
   },
+
   getById: (id, callback) => {
-    db.query("SELECT * FROM persona WHERE id = ?", [id], callback);
+    db.query("SELECT * FROM persona WHERE ID = ?", [id], callback);
   },
+
   BACKgetById: (id) => {
     return new Promise((resolve, reject) => {
-      db.query("SELECT * FROM persona WHERE id = ?", [id], (err, result) => {
-        if (err) {
-          return reject(err); // Rechaza la Promesa en caso de error
-        }
-        resolve(result[0]); // Resuelve la Promesa con el primer resultado
+      db.query("SELECT * FROM persona WHERE ID = ?", [id], (err, result) => {
+        if (err) return reject(err);
+        resolve(result[0]);
       });
     });
   },
 
   create: (data, callback) => {
+    const { Nombre, FechaNacimiento, Título, Foto, CV, Descripción } = data;
     db.query(
-      "INSERT INTO persona (Nombre, FechaNacimiento, Título, Foto, CV, Descripción, ID) VALUES (?, ?, ?, ?, ?, ?, UUID())",
-      data,
+      `INSERT INTO persona (Nombre, FechaNacimiento, Título, Foto, CV, Descripción, ID)
+       VALUES (?, ?, ?, ?, ?, ?, UUID())`,
+      [Nombre, FechaNacimiento, Título, Foto, CV, Descripción],
       callback
     );
   },
+
   update: (id, data, callback) => {
-    db.query("UPDATE persona SET ? WHERE id = ?", [data, id], callback);
-  },
-  delete: (id, callback) => {
-    db.query("DELETE FROM persona WHERE id = ?", [id], callback);
-  },
-  getDifussionByUserId: (id, callback) => {
+    const { Nombre, FechaNacimiento, Título, Foto, CV, Descripción } = data;
     db.query(
-      "SELECT d.* FROM difusióncientífica d INNER JOIN persona_difusión pd ON d.id = pd.difusión_id WHERE pd.persona_id = ?",
+      `UPDATE persona
+         SET Nombre = ?, FechaNacimiento = ?, Título = ?, Foto = ?, CV = ?, Descripción = ?
+       WHERE ID = ?`,
+      [Nombre, FechaNacimiento, Título, Foto, CV, Descripción, id],
+      callback
+    );
+  },
+
+  delete: (id, callback) => {
+    db.query("DELETE FROM persona WHERE ID = ?", [id], callback);
+  },
+
+  getDiffusionByUserId: (id, callback) => {
+    db.query(
+      `SELECT d.*
+         FROM difusioncientifica d
+         INNER JOIN difusioncientifica_persona dp
+           ON d.id = dp.difusioncientifica_id
+        WHERE dp.persona_id = ?`,
       [id],
+      callback
+    );
+  },
+
+  relateUserWithDiffusion: (personaId, difusionId, callback) => {
+    db.query(
+      `INSERT INTO difusioncientifica_persona
+         (persona_id, difusioncientifica_id)
+       VALUES (?, ?)`,
+      [personaId, difusionId],
       callback
     );
   },
@@ -49,13 +75,6 @@ const User = {
     db.query(
       "SELECT e.* FROM extensión e INNER JOIN persona_extensión pe ON e.id = pe.extensión_id WHERE pe.persona_id = ?",
       [id],
-      callback
-    );
-  },
-  relateUserWithDiffusion: (data, callback) => {
-    db.query(
-      "INSERT INTO persona_difusión (persona_id, difusión_id) VALUES (?, ?)",
-      data,
       callback
     );
   },

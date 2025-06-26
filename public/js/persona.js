@@ -30,46 +30,37 @@ function cargarPersona() {
     .catch((error) => {
       console.error("Error:", error);
     });
-
   fetch(`/persona/${id}/difusioncientifica`)
-    .then((response) => {
-      if (!response.ok) {
-        throw new Error("Error en la solicitud: " + response.statusText);
-      }
-      return response.json();
+    .then((res) => {
+      if (!res.ok) throw new Error("Error en la solicitud: " + res.statusText);
+      return res.json();
     })
     .then((data) => {
-      if (data.length == 0) return;
-      else {
-        document.getElementById("main").innerHTML += `
-        <div class="my-5">
+      if (!data.length) return;
+      document.getElementById("main").innerHTML += `
+        <div class="m-5">
           <h2 class="section-title">Investigaciones y Proyectos</h2>
-          <ul class="list-group" id="difusiones">
-            
-          </ul>
+          <ul class="list-group" id="difusiones"></ul>
         </div>
+      `;
+      const ul = document.getElementById("difusiones");
+      data.forEach((diff) => {
+        ul.innerHTML += `
+          <li
+            class="list-group-item list-group-item-action cursor-active"
+            style="cursor: pointer;"
+            onclick="window.open('${diff.url_pdf || ""}', '_blank')"
+          >
+            <h5>${diff.titulo}</h5>
+            <h6>${diff.estado || ""}</h6>
+            <p>${diff.resumen}</p>
+            <small class="text-muted">${diff.cita_formateada || ""}</small>
+            <small class="text-muted d-block">${diff.anio || ""}</small>
+          </li>
         `;
-      }
-      const difusiones = data;
-      const ulDifusiones = document.getElementById("difusiones");
-      difusiones.forEach((difusion) => {
-        ulDifusiones.innerHTML += `<li class="list-group-item list-group-item-action cursor-active" style="cursor: pointer;" onclick="window.location.href = '${
-          difusion.Link || ""
-        }'">
-              <h5>${difusion.Título}</h5>
-              <h6>${difusion.Tipo || ""}</h6>
-              <p>
-                ${difusion.Descripción}
-              </p>
-              <small class="text-muted">${formatDate(
-                difusion.FechaPublicación
-              )}</small>
-            </li>`;
       });
     })
-    .catch((error) => {
-      console.error("Error:", error);
-    });
+    .catch((error) => console.error("Error:", error));
 
   fetch(`/persona/${id}/proyecto`)
     .then((response) => {
