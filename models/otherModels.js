@@ -142,7 +142,7 @@ const OtherModels = {
       LEFT JOIN persona p ON dp.persona_id = p.ID
       GROUP BY 
         d.id, d.titulo, d.journal, d.anio, d.doi, d.url_pdf, d.resumen, d.cita_formateada, d.estado
-      ORDER BY d.creado_en DESC;
+      ORDER BY d.anio DESC;
       `,
       callback
     );
