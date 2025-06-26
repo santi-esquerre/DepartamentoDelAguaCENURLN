@@ -26,7 +26,7 @@ function mostrarDatos() {
                   <h4>${diff.DifusionTitulo}</h4>
                   <!-- <h6>${diff.Autores}</h6> -->
                   <p">${diff.cita_formateada}</p>
-                  <p>${diff.resumen}</p>
+                  <p>${diff.resumen != "Sin resumen" ? diff.resumen : ""}</p>
                 </div>
                 <small class="text-muted">${diff.anio || ""}</small>
               </div>
