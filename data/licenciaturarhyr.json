@@ -1,5 +1,5 @@
 {
-  "titulo_pagina": "Departamento del Agua - CenUR Litoral Norte",
+  "titulo_pagina": "Licenciatura en Recursos Hídricos y Riego | Departamento del Agua - CenUR Litoral Norte",
   "seccion_principal": {
     "titulo": "Bienvenido a la Licenciatura en Recursos Hídricos y Riego",
     "subtitulo": "¡Impulsa tu futuro con la Licenciatura en Recursos Hídricos y Riego!",
@@ -45,18 +45,24 @@
         {
           "url": "./rsc/Trayectoria2024_LRHYR.pdf",
           "texto": "Trayectoria sugerida"
+        },
+        {
+          "url": "/uploads/1745343754519-r41ox5.pdf",
+          "texto": "Plan de Estudios PDF"
         }
       ]
     },
     {
       "id": "competencias",
       "titulo": "Competencias del Egresado",
-      "contenido": "El egresado está capacitado para:  \n\n- **Realizar estudios, formular proyectos y participar en la dirección de obras** en diferentes áreas de los recursos hídricos, como:  \n  - **Explotación de aguas subterráneas**  \n  - **Reconocimiento del subsuelo** mediante geofísica  \n  - **Distribución y abastecimiento de agua potable**  \n  - **Conducción y tratamiento de efluentes cloacales**  \n  - **Estudios de calidad de agua y medioambiente**  \n  - **Proyectos para corrección y regulación fluvial**  \n  - **Diseño de sistemas de drenaje y riego**  \n  - **Control de erosión hídrica**  \n  - **Construcción de presas de tierra y diques**  "
+      "contenido": "El egresado está capacitado para:  \n\n- **Realizar estudios, formular proyectos y participar en la dirección de obras** en diferentes áreas de los recursos hídricos, como:  \n  - **Explotación de aguas subterráneas**  \n  - **Reconocimiento del subsuelo** mediante geofísica  \n  - **Distribución y abastecimiento de agua potable**  \n  - **Conducción y tratamiento de efluentes cloacales**  \n  - **Estudios de calidad de agua y medioambiente**  \n  - **Proyectos para corrección y regulación fluvial**  \n  - **Diseño de sistemas de drenaje y riego**  \n  - **Control de erosión hídrica**  \n  - **Construcción de presas de tierra y diques**  ",
+      "enlaces": []
     },
     {
       "id": "perfil-profesional",
       "titulo": "Perfil Profesional",
-      "contenido": "Es un profesional con **sólida formación técnica**, especializado en el **manejo de los recursos hídricos**.  \n\nEl Licenciado es requerido en:  \n- **Empresas privadas agrícolas o agroindustriales**, desempeñándose como profesional responsable en tareas de **asesoramiento y supervisión en el área de riego**.  \n- **Organismos estatales** de control de la **contaminación ambiental** y monitoreo de los **recursos hídricos**.  \n- **Organismos de gestión hídrica**, donde puede ejercer funciones de **asesoramiento técnico, manejo de personal, planificación y ejecución del recurso hídrico**.  \n"
+      "contenido": "Es un profesional con **sólida formación técnica**, especializado en el **manejo de los recursos hídricos**.  \n\nEl Licenciado es requerido en:  \n- **Empresas privadas agrícolas o agroindustriales**, desempeñándose como profesional responsable en tareas de **asesoramiento y supervisión en el área de riego**.  \n- **Organismos estatales** de control de la **contaminación ambiental** y monitoreo de los **recursos hídricos**.  \n- **Organismos de gestión hídrica**, donde puede ejercer funciones de **asesoramiento técnico, manejo de personal, planificación y ejecución del recurso hídrico**.  \n",
+      "enlaces": []
     }
   ],
   "malla": {

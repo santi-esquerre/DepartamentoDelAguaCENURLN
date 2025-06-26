@@ -1,26 +1,26 @@
 {
-    "titulo_pagina": "Departamento del Agua - CenUR Litoral Norte",
-    "carrusel": [
-        {
-            "imagen": "img/Slide1.jpg",
-            "titulo": "**Recursos Hídricos**",
-            "descripcion": "Una carrera única que te forma para diseñar soluciones innovadoras en riego, hidrología y gestión ambiental. Conviértete en un profesional capaz de enfrentar los desafíos del agua del siglo XXI.",
-            "boton_texto": "**¡Construye tu camino profesional con impacto real!**",
-            "boton_enlace": "./licenciaturarhyr"
-        },
-        {
-            "imagen": "img/Slide2.jpg",
-            "titulo": "Investigación de *vanguardia*",
-            "descripcion": "Estudiamos cuerpos de agua subterráneos y superficiales y las afectaciones producidas por actividades humanas. Nuestras líneas de investigación integran geofísica, hidrometría, hidrogeoquímica y modelación matemática para comprender y proteger nuestros recursos hídricos.",
-            "boton_texto": "🔬 Descubre la ciencia que **transforma territorios**",
-            "boton_enlace": "./investigacion.html"
-        },
-        {
-            "imagen": "img/Slide3.jpg",
-            "titulo": "Innovación continua",
-            "descripcion": "Nuestro equipo no para de crecer y evolucionar. Cada **semana**, cada **mes**, generamos nuevos *insights* y descubrimientos que impulsan nuestra comprensión de los **recursos hídricos**.",
-            "boton_texto": "📢 **Entérate de las últimas novedades**",
-            "boton_enlace": "./noticias.html"
-        }
-    ]
+  "titulo_pagina": "Inicio | Departamento del Agua - CenUR Litoral Norte",
+  "carrusel": [
+    {
+      "imagen": "img/Slide1.jpg",
+      "titulo": "**Recursos Hídricos**",
+      "descripcion": "Una carrera única que te forma para diseñar soluciones innovadoras en riego, hidrología y gestión ambiental. Conviértete en un profesional capaz de enfrentar los desafíos del agua del siglo XXI.",
+      "boton_texto": "**¡Construye tu camino profesional con impacto real!**",
+      "boton_enlace": "./licenciaturarhyr"
+    },
+    {
+      "imagen": "img/Slide2.jpg",
+      "titulo": "Investigación de vanguardia",
+      "descripcion": "Estudiamos cuerpos de agua subterráneos y superficiales y las afectaciones producidas por actividades humanas. Nuestras líneas de investigación integran geofísica, hidrometría, hidrogeoquímica y modelación matemática para comprender y proteger nuestros recursos hídricos.",
+      "boton_texto": "🔬 Descubre la ciencia que **transforma territorios**",
+      "boton_enlace": "./investigacion.html"
+    },
+    {
+      "imagen": "img/Slide3.jpg",
+      "titulo": "Innovación continua",
+      "descripcion": "Nuestro equipo no para de crecer y evolucionar. Cada **semana**, cada **mes**, generamos nuevos *insights* y descubrimientos que impulsan nuestra comprensión de los **recursos hídricos**.",
+      "boton_texto": "📢 **Entérate de las últimas novedades**",
+      "boton_enlace": "./noticias.html"
+    }
+  ]
 }
